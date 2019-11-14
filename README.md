@@ -11,3 +11,7 @@
 
 - chapter01. Hello python
 
+    - ~ 1.2 basic introduction of python
+
+    - 1.3 basic writing method of python
+
