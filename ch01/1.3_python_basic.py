@@ -1,59 +1,54 @@
-# study basic python language
+# 1. calculations in python
+print(1 + 2)
+print(1 - 2)
+print(4 * 5)
+print(7 / 5)
 
-# 1. basic calculations
+print(7 // 5)
+print(7 % 5)
 
-print(1 + 2)  # plus
-print(1 - 2)  # minus
-print(4 * 5)  # multiple
-print(7 / 5)  # divide
+print(3 ** 2)
 
-print(7 // 5)  # share of divide
-print(7 % 5)  # rest of divide
 
-print(3 ** 2)  # power
+# 2. data types in python
+print(type(10))
+print(type(2.1))
+print(type('a'))
 
-# 2. data types
-
-print(type(10))  # int
-print(type(2.1))  # float
-print(type('a'))  # str
 
 # 3. variables
-
 x = 10  # initialization
 print(x)
 
 x = 100  # substisution
 print(x)
 
-# 4. list
 
+# 4. array in python, list
 arr = [1, 2, 3, 4, 5]
 print(arr)
-
 print(len(arr))  # length of list
-print(arr[0])  # index accessing
 
-arr[4] = 99  # substitution
+arr[4] = 99  # substitution of list
 print(arr)
 
+print(arr[0])  # index accessing
 print(arr[0:2])  # slicing
 print(arr[1:])
 print(arr[:3])
 print(arr[:-1])
 
-# 5. dictionary
 
+# 5. dictionary in python
 dic = {'a': 1, 'b': 2}
-print(dic['a'])  # accessing atom
+print(dic['a'])  # accessing
 
-dic['c'] = 3  # substitution
+dic['c'] = 3  # add data in dict
 print(dic)
 
-# 6. boolean
 
-a = True
-b = False
+# 6. boolean types in python
+a, b = True, False
 
 print(type(a))
 
@@ -61,8 +56,8 @@ print(a and b)
 print(a or b)
 print(not b)
 
-# 7. if
 
+# 7. if in python
 if a:
     print('a is True.')
 
@@ -71,12 +66,13 @@ if b:
 else:
     print('b is False.')
 
-# 8. for
 
+# 8. loop in python, for
 for i in [1, 2, 3, 4, 5]:
     print(i)
 
-# 9. function
+
+# 9. function in python
 
 
 def greeting():

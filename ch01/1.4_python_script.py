@@ -1,17 +1,8 @@
-# study python with using script file
-
-# 1. save files
-
-'''
-for run file with terminal(powershell, bash, etc)
-enter python your_file_name.py in terminal
-'''
-
+# 1. print in python
 print('I am hungry!')
 
-# 2. class
 
-
+# 2. OOP in python with class
 class Man:
     def __init__(self, name):
         self.name = name
@@ -24,6 +15,6 @@ class Man:
         print('Good-bye ' + self.name + '!')
 
 
-m = Man('David')
+m = Man('Reny')
 m.hello()
 m.goodbye()
