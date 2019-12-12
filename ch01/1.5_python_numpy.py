@@ -33,12 +33,6 @@ print(A * 10)  # broadcast
 
 
 # 5. Broadcast
-
-'''
-when using numpy array
-if size of A mat and B mat is diff
-numpy match size of mat with broadcast
-'''
-
+# when using numpy array, if size of A mat and B mat is diff, numpy match size of mat with broadcast
 C = np.array([10, 20])
 print(A * C)
