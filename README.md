@@ -9,11 +9,16 @@
 
 ## 0. What I learned
 
-- chapter01. Hello python
+- chapter01. Hello, Python
 
     - 1.3 basic writing method of python
 
     - 1.4 using terminal & OOP in python with def class
+
     - 1.5 basic information of numpy
+
     - 1.6 basic information of matplotlib
 
+- chapter02. Perceptron
+
+    - 2.3 basic of perceptron
