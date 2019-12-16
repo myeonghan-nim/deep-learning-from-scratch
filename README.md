@@ -11,14 +11,24 @@
 
 - chapter01. Hello, Python
 
-    - 1.3 basic writing method of python
+    - 1.1 What is python?
 
-    - 1.4 using terminal & OOP in python with def class
+    - 1.2 Install python
 
-    - 1.5 basic information of numpy
+    - 1.3 Python interpretor
 
-    - 1.6 basic information of matplotlib
+    - 1.4 Python script file
+
+    - 1.5 NumPy
+
+    - 1.6 Matplotlib
 
 - chapter02. Perceptron
 
-    - 2.3 basic of perceptron
+    - 2.1 What is perceptron?
+
+    - 2.2 Simple logic cycle
+
+    - 2.3 Make perceptron
+
+    - 2.4 Limit of perceptron
