@@ -20,4 +20,14 @@ $ pip install <tensorflow, matplotlib, etc>
 
 - Python에 `Anaconda`를 같이 사용하기도 합니다. [Anaconda](https://www.anaconda.com/)는 데이터 분석 등에 도움되는 라이브러리가 포함되어 있습니다.
 
+## 1.7 정리
+
+- Python은 간단하고 익히기 쉬운 프로그래밍 언어로 오픈 소스이여서 자유로이 사용할 수 있다.
+
+> 이 과정에서 Python 3.x, Numpy, matplotlib 등을 사용합니다.
+
+- Python은 interpreter와 script file로 동작할 수 있다.
+
+- Python은 함수와 class를 사용해 구현을 정리할 수 있다.
+
 #### 이제부터 Python을 만져보며 머신러닝, 딥러닝에 익숙해지도록 합시다!
