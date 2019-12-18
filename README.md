@@ -23,6 +23,8 @@
 
     - 1.6 Matplotlib
 
+    - 1.7 Summary
+
 - chapter02. Perceptron
 
     - 2.1 What is perceptron?
@@ -32,3 +34,13 @@
     - 2.3 Make perceptron
 
     - 2.4 Limit of perceptron
+
+    - 2.5 When multilayer perceptron moves
+
+    - 2.6 from NAND to computer
+
+    - 2.7 Summary
+
+- chapter03. Neural Network
+
+    - 3.1 from perceptron to neural network
