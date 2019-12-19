@@ -44,3 +44,5 @@
 - chapter03. Neural Network
 
     - 3.1 from perceptron to neural network
+
+    - 3.2 Activation function
