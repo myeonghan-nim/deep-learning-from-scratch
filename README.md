@@ -46,3 +46,5 @@
     - 3.1 from perceptron to neural network
 
     - 3.2 Activation function
+
+    - 3.3 Calculation of multi-dimension matrixes
