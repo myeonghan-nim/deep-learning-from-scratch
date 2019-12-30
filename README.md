@@ -5,7 +5,13 @@
 
 - Original Github link : [GitHub Storage](https://github.com/WegraLee/deep-learning-from-scratch)
 
-- Basic study repository for self study about DL
+- DL 기초부터 차근차근 배워가기 위해 만든 repository입니다.
+
+> - Tip
+>
+> - Anaconda를 설치한 후 Visual Studio Code에서 잡지 못하는 경우
+>
+>   - `source ~/Anaconda3/Scripts/activate` 명령어를 사용해 강제로 가상환경을 구축합니다.
 
 ## 0. What I learned
 
