@@ -54,3 +54,25 @@
     - 3.2 Activation function
 
     - 3.3 Calculation of multi-dimension matrixes
+
+    - 3.4 Simulate multi layer neural network
+
+    - 3.5 Design print layer
+
+    - 3.6 Recognize handwriting
+
+    - 3.7 Summary
+
+- chapter04. Learning Neural Network
+
+    - 4.1 Learn from data!
+
+    - 4.2 Loss function
+
+    - 4.3 Numerical differential
+
+    - 4.4 Slope
+
+    - 4.5 Simulate learning algorithm
+
+    - 4.6 Summary
