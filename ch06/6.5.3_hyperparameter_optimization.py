@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mnist import load_mnist
-from multi_layer_net import MultiLayerNet
-from util import shuffle_dataset
-from trainer import Trainer
+from datasets.mnist import load_mnist
+from commons.multi_layer_net import MultiLayerNet
+from commons.util import shuffle_dataset
+from commons.trainer import Trainer
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 

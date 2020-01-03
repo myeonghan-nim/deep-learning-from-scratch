@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mnist import load_mnist
-from multi_layer_net_extend import MultiLayerNetExtend
-from trainer import Trainer
+from datasets.mnist import load_mnist
+from commons.multi_layer_net_extend import MultiLayerNetExtend
+from commons.trainer import Trainer
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 

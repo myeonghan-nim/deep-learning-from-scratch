@@ -1,6 +1,6 @@
-from optimizer import SGD, Adam
-from multi_layer_net_extend import MultiLayerNetExtend
-from mnist import load_mnist
+from commons.optimizer import SGD, Adam
+from commons.multi_layer_net_extend import MultiLayerNetExtend
+from datasets.mnist import load_mnist
 import matplotlib.pyplot as plt
 import numpy as np
 

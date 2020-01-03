@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import OrderedDict
-from optimizer import *
+from commons.optimizer import *
 
 
 def f(x, y):

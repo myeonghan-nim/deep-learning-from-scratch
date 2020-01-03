@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mnist import load_mnist
-from multi_layer_net import MultiLayerNet
-from optimizer import SGD
+from datasets.mnist import load_mnist
+from commons.multi_layer_net import MultiLayerNet
+from commons.optimizer import SGD
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
