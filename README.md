@@ -94,3 +94,17 @@
     - 5.7 Simulate backpropagation
 
     - 5.8 Summary
+
+- chapter06. Technics about learning
+
+    - 6.1 Renewal parameters
+
+    - 6.2 Initial value of wieght
+
+    - 6.3 Bacth normalization
+
+    - 6.4 for right learning
+
+    - 6.5 Find suitable hyperparameters
+
+    - 6.6 Summary
