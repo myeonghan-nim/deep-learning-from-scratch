@@ -1,15 +1,5 @@
-# 0. old import method
-# import sys
-# import os
-
-# sys.path.append(os.pardir)
-
-# from common.functions import sigmoid, softmax
-# from dataset.mnist import load_mnist
-
-# 1. new import method
-from functions import sigmoid, softmax
-from mnist import load_mnist
+from commons.functions import sigmoid, softmax
+from datasets.mnist import load_mnist
 import pickle
 import numpy as np
 

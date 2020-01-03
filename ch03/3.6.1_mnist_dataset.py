@@ -1,13 +1,4 @@
-# 0. original import method
-# import sys
-# import os
-
-# sys.path.append(os.pardir)  # load files in parent dir
-
-# from dataset.mnist import load_mnist
-
-# 1. new import method
-from mnist import load_mnist
+from datasets.mnist import load_mnist
 from PIL import Image
 import numpy as np
 
