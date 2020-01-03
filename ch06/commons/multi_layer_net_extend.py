@@ -1,7 +1,7 @@
 import numpy as np
 from collections import OrderedDict
-from layers import *
-from gradient import numerical_gradient
+from commons.layers import *
+from commons.gradient import numerical_gradient
 
 
 class MultiLayerNetExtend:
