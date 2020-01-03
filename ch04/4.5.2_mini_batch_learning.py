@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mnist import load_mnist
-from neural_network import TwoLayerNet
+from datasets.mnist import load_mnist
+from commons.neural_network import TwoLayerNet
 
 # 데이터 읽기
 (x_train, t_train), (x_test, t_test) = load_mnist(

@@ -1,6 +1,6 @@
 import numpy as np
-from gradient import numerical_gradient
-from functions import softmax, cross_entropy_error
+from commons.gradient import numerical_gradient
+from commons.functions import softmax, cross_entropy_error
 
 
 class simpleNet:
