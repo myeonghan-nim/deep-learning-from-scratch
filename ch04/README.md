@@ -12,13 +12,20 @@
 
 - 머신러닝은 **데이터**를 통해 모든 문제를 해결합니다.
 
+<img src="README.assets/fig 4-1.png" alt="fig 4-1" style="zoom:50%;" />
+
+> 제일 대표적인 예가 바로 MNIST를 구별하는 알고리즘입니다.
+
 - 즉, 사람의 **직관**과 다르게 수집된 데이터에서 패턴을 분석하고 그를 통해 정답을 유추해 나갑니다.
 
 - 데이터에서 패턴, 즉 **특징**을 추출하고 이 특징의 패턴을 학습하는 방식이 주로 사용됩니다.
 
     - 지도 학습에서 주로 사용되는 기법은 SVM, KNN 등이 존재합니다.
 
+    <img src="README.assets/fig 4-2.png" alt="fig 4-2" style="zoom: 50%;" />
+
 - 다만, 데이터의 특징은 사람이 설계해야하므로 문제에 적합한 특징을 찾아내어 문제를 해결하는 것이 중요합니다.
+
 
 ### 4.1.2 훈련 데이터와 시험 데이터
 
@@ -48,6 +55,8 @@
 
 - 가장 많이 쓰이는 함수로 신경망의 출력과 정답 레이블의 차이의 제곱의 합의 평균을 기준으로 합니다.
 
+<img src="README.assets/e 4.1.png" alt="e 4.1" style="zoom:50%;" />
+
 ```python
 import numpy as np
 
@@ -69,7 +78,11 @@ print(mean_squared_error(y2, t))  # 0.7312
 
 - 교차 엔트로피 오차는 정답 레이블의 값에 자연로그를 취한 출력값을 곱하고 이를 합친 것의 음수를 기준으로 합니다.
 
+<img src="README.assets/e 4.2.png" alt="e 4.2" style="zoom:50%;" />
+
 - 이 방식을 사용하면 실질적으로 정답일 때 모델이 출력한 값을 평가합니다.
+
+<img src="README.assets/fig 4-3.png" alt="fig 4-3" style="zoom:50%;" />
 
 ```python
 import numpy as np
@@ -91,6 +104,8 @@ print(cross_entropy_error(y2, t))  # 2.3025
 ### 4.2.3 미니배치 학습
 
 - 훈련 데이터가 많을 경우 손실 함수는 각 오차를 합친 뒤 정규화해서 오차를 구할 수 있습니다.
+
+<img src="README.assets/e 4.3.png" alt="e 4.3" style="zoom:50%;" />
 
 - 다만 데이터가 너무 많은 경우 일일히 계산하기에 너무 많은 시간이 걸리므로 일부의 데이터만 학습하는 **미니배치 학습**을 진행합니다.
 
@@ -137,6 +152,8 @@ def cross_entropy_error(y, t):  # one hot encoding ver
 
     - 즉, 매개변수가 조금 바뀌어도 거의 변하지 않는 정확도보다 손실 함수가 모델 성능을 높이는 데 유리합니다.
 
+    <img src="README.assets/fig 4-4.png" alt="fig 4-4" style="zoom:50%;" />
+    
     - 이는 활성화 함수로 계단 함수를 사용하지 않는 이유와 동일합니다.
 
 ## 4.3 수치 미분
@@ -147,16 +164,22 @@ def cross_entropy_error(y, t):  # one hot encoding ver
 
 - **미분**은 특정 시간의 변화량을 의미합니다.
 
+<img src="README.assets/e 4.4.png" alt="e 4.4" style="zoom:50%;" />
+
 ```python
 def numerical_diff(f, x):
     return (f(x + 10e-50) - f(x)) / 10e-50
 ```
 
-> 위 방식대로 미분을 구현하면 오차가 발생합니다.
->
->   1. 컴퓨터는 매우 작은 값을 반올림 오차로 인해 0으로 간주합니다.
->
->   2. 컴퓨터는 무한히 0으로 좁히는 방식이 불가능합니다.
+- 위 방식대로 미분을 구현하면 오차가 발생합니다.
+
+    1. 컴퓨터는 매우 작은 값을 반올림 오차로 인해 0으로 간주합니다.
+
+    2. 컴퓨터는 무한히 0으로 좁히는 방식이 불가능합니다.
+
+- 이를 해결하는 방식이 **중심 차분**을 쓰는 방법입니다.
+
+<img src="README.assets/fig 4-5.png" alt="fig 4-5" style="zoom:50%;" />
 
 ```python
 def numerical_diff(f, x):
@@ -166,6 +189,12 @@ def numerical_diff(f, x):
 > 하지만 위와 같은 중심차분을 통해 계산하면 오차를 줄일 수 있습니다.
 
 ### 4.3.2 수치 미분의 예
+
+> 4.3.2_numerical_diff.py를 참고하면 됩니다.
+
+<img src="README.assets/e 4.5.png" alt="e 4.5" style="zoom:50%;" />
+
+> 예시로 사용하는 함수입니다.
 
 ```python
 import numpy as np
@@ -191,9 +220,21 @@ numerical_diff(function_1, 5)
 numerical_diff(function_1, 10)
 ```
 
+<img src="README.assets/fig 4-6.png" alt="fig 4-6" style="zoom:50%;" />
+
+> 위는 해당 함수의 그래프입니다.
+
+<img src="README.assets/fig 4-7.png" alt="fig 4-7" style="zoom:50%;" />
+
+> 해당 함수를 `x = 5`, `x = 10`에서 미분한 결과입니다.
+
 ### 4.3.3 편미분
 
 - 편미분은 두 개 이상의 변수가 존재하는 경우 하나를 무시하고 다른 하나에 대해 미분하는 방식을 의미합니다.
+
+<img src="README.assets/e 4.6.png" alt="e 4.6" style="zoom:50%;" />
+
+> 예시로 사용하는 함수입니다.
 
 ```python
 import numpy as np
@@ -212,7 +253,13 @@ def function_tmp2(x1):  # diff of x1
 
 ```
 
+<img src="README.assets/fig 4-8.png" alt="fig 4-8" style="zoom:50%;" />
+
+> 해당 함수를 그리면 다음과 같은 그래프를 나타냅니다.
+
 ## 4.4 기울기
+
+> 4.4_slope.py를 참고하면 됩니다.
 
 - 앞서서 한 편미분을 동시에 진행하려면 편미분 값을 벡터로 모으면 됩니다. 이를 기울기라고 부릅니다.
 
@@ -241,21 +288,34 @@ def numerical_gradient(f, x):
 
 ```
 
-- 기울기가 가르키는 방향은 **각 장소에서 함수의 출력을 가장 크게 줄이는 방향**입니다.
+<img src="README.assets/fig 4-9.png" alt="fig 4-9" style="zoom:50%;" />
+
+> 위의 파일을 실행한 결과입니다.
+
+- 여기서 기울기가 가르키는 방향은 **각 장소에서 함수의 출력을 가장 크게 줄이는 방향**입니다.
 
 ### 4.4.1 경사법(경사 하강법)
+
+> 4.4.1_gradient_method.py를 참고하면 됩니다.
 
 - 손실 함수를 최소로 줄이는 방법 중 하나가 바로 기울기를 활용한 경사법입니다.
 
     - 다만, 함수가 복잡할 경우 **안장점**과 같은 고원이 있어 기울기를 0으로 만드는 장소가 될 수도 있습니다.
 
     - 따라서 학습을 진행할 때 정말 최소값을 찾은 것인지 검증이 필요합니다.
-
 - **경사법**은 기울어진 방향으로 나아가며 함수 값을 줄여나가는 것을 목표로 합니다.
+
+<img src="README.assets/e 4.7.png" alt="e 4.7" style="zoom:50%;" />
+
+> 수식으로 위와 같이 표현합니다.
 
 - 신경망 학습의 경우 **학습률**, 즉 매개변수 값을 얼마나 갱신할 지 결정하며 학습합니다.
 
     - 다만 학습률은 너무 크거나 작을 경우 잘못된 값을 도출할 수 있으니 주의해야 합니다.
+
+<img src="README.assets/fig 4-10.png" alt="fig 4-10" style="zoom:50%;" />
+
+> 해당 파일을 실행한 결과입니다.
 
 ```python
 def gradient_descent(f, init_x, lr=0.01, step_num=100):
@@ -272,6 +332,13 @@ def gradient_descent(f, init_x, lr=0.01, step_num=100):
 
     - 이러한 하이퍼 파라미터는 컴퓨터가 설정하지 않고 사람이 직접 지정해주어야 합니다.
 
+### 4.4.2 신경망에서의 기울기
+
+> 4.4.2_gradient_in_neural.py를 참고하면 됩니다.
+
+- 신경망 학습에서도 기울기를 구해야 합니다. 이는 다음과 같이 표현할 수 있습니다.
+
+<img src="README.assets/e 4.8.png" alt="e 4.8" style="zoom:50%;" />
 
 ## 4.5 학습 알고리즘 구현하기
 
@@ -325,6 +392,22 @@ def gradient_descent(f, init_x, lr=0.01, step_num=100):
 | numerical_gradient | 가중치 매개변수의 기울기 |
 | gradient | numerical_gradient의 개선판 |
 
+### 4.5.2 미니배치 학습 구현하기
+
+> 4.5.2_mini_batch_learning.py를 참고하면 됩니다.
+
+- 시험 데이터로 평가하기 전 학습 그래프는 다음과 같습니다.
+
+<img src="README.assets/fig 4-11.png" alt="fig 4-11" style="zoom:50%;" />
+
+### 4.5.3 시험 데이터로 평가하기
+
+> 4.5.2_mini_batch_learning.py를 참고하면 됩니다.
+
+- 시험 데이터로 평가한 후 평가 그래프는 다음과 같습니다.
+
+<img src="README.assets/fig 4-12.png" alt="fig 4-12" style="zoom:50%;" />
+
 ## 4.6 정리
 
 - 머신러닝에 사용하는 데이터들은 훈련 데이터와 시험 데이터로 나누어 사용합니다.
@@ -342,5 +425,3 @@ def gradient_descent(f, init_x, lr=0.01, step_num=100):
 - 수치 미분을 통해 계산하면 시간이 걸리지만 구현이 간단합니다.
 
     - 다음 장에서 배울 오차역전파법은 기울기를 고속으로 구할 수 있습니다.
-
-#### 그럼 지금부터 neural network에 대해 공부해봅시다!
