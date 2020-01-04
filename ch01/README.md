@@ -48,15 +48,15 @@ $ pip install <tensorflow, matplotlib, etc>
 
 - 하단의 그래프는 해당 파일을 실행할 때 나오는 그래프들의 모습입니다.
 
-![fig 1-3](README.assets/fig 1-3-1578118826235.png)
+<img src="README.assets/fig 1-3-1578118826235.png" alt="fig 1-3" style="zoom: 50%;" />
 
 > 1.6.1 단순한 그래프 그리기 예시입니다.
 
-![fig 1-4](README.assets/fig 1-4-1578118826235.png)
+<img src="README.assets/fig 1-4-1578118826235.png" alt="fig 1-4" style="zoom:50%;" />
 
 > 1.6.2 pyplot의 기능 예시입니다.
 
-![fig 1-5](README.assets/fig 1-5-1578118826235.png)
+<img src="README.assets/fig 1-5-1578118826235.png" alt="fig 1-5" style="zoom:50%;" />
 
 > 1.6.3 이미지 표시하기 예시입니다.
 
