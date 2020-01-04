@@ -14,7 +14,7 @@
 
 - 입력 신호가 perceptron에 보내질 때 가중치가 곱해져 이들이 합쳐지는데 이 신호의 총합이 특정 한계를 넘어야 **1**을 출력합니다.
 
-<img src="README.assets/e 2.1.png" alt="e 2.1" style="zoom: 67%;" />
+<img src="README.assets/e 2.1.png" alt="e 2.1" style="zoom: 50%;" />
 
 > 이와 같은 방식으로 동작합니다.
 
@@ -56,7 +56,7 @@
 
 - 해당 파일에서 사용되는 가중치 변수 `b`는 이러한 방식으로 동작합니다.
 
-<img src="README.assets/e 2.2.png" alt="e 2.2" style="zoom: 67%;" />
+<img src="README.assets/e 2.2.png" alt="e 2.2" style="zoom: 50%;" />
 
 ## 2.4 Perceptron의 한계
 
@@ -99,25 +99,25 @@
 
 ### 2.5.1 기존 게이트 조합하기
 
-<img src="README.assets/fig 2-9.png" alt="fig 2-9" style="zoom:67%;" />
+<img src="README.assets/fig 2-9.png" alt="fig 2-9" style="zoom:50%;" />
 
 > 순서대로 **AND**, **NAND**, **OR** 게이트를 나타냅니다.
 
 - XOR 게이트는 위의 3개의 게이트를 적절히 조합해야 구성할 수 있습니다.
 
-<img src="README.assets/fig 2-10.png" alt="fig 2-10" style="zoom: 67%;" />
+<img src="README.assets/fig 2-10.png" alt="fig 2-10" style="zoom: 50%;" />
 
 > 추측해보세요!
 
-<img src="README.assets/fig 2-11.png" alt="fig 2-11" style="zoom:67%;" />
+<img src="README.assets/fig 2-11.png" alt="fig 2-11" style="zoom:50%;" />
 
 > **XOR** 게이트
 
-<img src="README.assets/fig 2-12.png" alt="fig 2-12" style="zoom:67%;" />
+<img src="README.assets/fig 2-12.png" alt="fig 2-12" style="zoom:50%;" />
 
 > **XOR** perceptron
 
-<img src="README.assets/fig 2-13.png" alt="fig 2-13" style="zoom: 67%;" />
+<img src="README.assets/fig 2-13.png" alt="fig 2-13" style="zoom: 50%;" />
 
 ## 2.6 NAND에서 computer까지
 
