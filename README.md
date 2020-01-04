@@ -7,15 +7,15 @@
 
 - DL 기초부터 차근차근 배워가기 위해 만든 repository입니다.
 
-> - Tip
+#### Tip
+
+> Anaconda를 설치한 후 Visual Studio Code에서 잡지 못하는 경우
 >
-> - Anaconda를 설치한 후 Visual Studio Code에서 잡지 못하는 경우
->
->   - `source ~/Anaconda3/Scripts/activate` 명령어를 사용해 강제로 가상환경을 구축합니다.
+> `source ~/Anaconda3/Scripts/activate` 명령어를 사용해 강제로 가상환경을 구축합니다.
 
 ## 0. What I learned
 
-- chapter01. Hello, Python
+- [chapter01. Hello, Python](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch01)
 
     - 1.1 What is python?
 
@@ -31,7 +31,7 @@
 
     - 1.7 Summary
 
-- chapter02. Perceptron
+- [chapter02. Perceptron](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch02)
 
     - 2.1 What is perceptron?
 
@@ -47,7 +47,7 @@
 
     - 2.7 Summary
 
-- chapter03. Neural Network
+- [chapter03. Neural Network](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch03)
 
     - 3.1 from perceptron to neural network
 
@@ -63,7 +63,7 @@
 
     - 3.7 Summary
 
-- chapter04. Learning Neural Network
+- [chapter04. Learning Neural Network](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch04)
 
     - 4.1 Learn from data!
 
@@ -77,7 +77,7 @@
 
     - 4.6 Summary
 
-- chapter05. Backpropagation
+- [chapter05. Backpropagation](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch05)
 
     - 5.1 Calculation graph
 
@@ -95,7 +95,7 @@
 
     - 5.8 Summary
 
-- chapter06. Technics about learning
+- [chapter06. Technics about learning](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch06)
 
     - 6.1 Renewal parameters
 
@@ -109,7 +109,7 @@
 
     - 6.6 Summary
 
-- chapter07. CNN
+- [chapter07. CNN](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch07)
 
     - 7.1 Overall structure
 
