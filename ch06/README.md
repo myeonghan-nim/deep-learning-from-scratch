@@ -26,6 +26,12 @@
 
 - SGD는 가중치 매개변수에 그 매개변수의 손실 함수 기울기와 학습률을 곱한 값을 통해 갱신하는 과정입니다.
 
+    - 이를 수식으로 나타내면 다음과 같습니다.
+
+<img src="README.assets/e 6.1.png" alt="e 6.1" style="zoom:50%;" />
+
+- 이를 python으로 구현하면 다음과 같습니다.
+
 ```python
 class SGD:
     def __init__(self, lr=0.01):
@@ -55,11 +61,23 @@ for i in range(10000):
 
 - SGD는 단순하고 구현도 쉽지만 문제에 따라서 비효율적일 수 있습니다.
 
-- 예를 들어 `f = 0.05 * x ** 2 + y ** 2` 함수가 있을 경우 기울기는 `y = 0`인 모든 `x`에 대해 기울기가 최소라는 점입니다.
+- 예를 들어 다음과 같은 함수가 있을 경우 기울기는 `y = 0`인 모든 `x`에 대해 기울기가 최소라는 점입니다.
 
-    - 하지만 실제 최소가 되는 점은 `x, y = 0, 0`인 지점입니다.
+<img src="README.assets/e 6.2.png" alt="e 6.2" style="zoom:50%;" />
+
+- 하지만 실제 최소가 되는 점은 `x, y = 0, 0`인 지점입니다.
+
+<img src="README.assets/fig 6-1.png" alt="fig 6-1" style="zoom:50%;" />
+
+> 예시 함수의 그래프 모델링
+
+- 이 함수의 기울기를 구현하면 다음과 같은 그림이 나옵니다.
+
+<img src="README.assets/fig 6-2.png" alt="fig 6-2" style="zoom:50%;" />
 
 - 만일 이 함수를 SGD로 구현하면 (0, 0)까지 도달할 수 있을지라도 진동하며 움직이는 비효율적인 움직임을 보여줍니다.
+
+<img src="README.assets/fig 6-3.png" alt="fig 6-3" style="zoom:50%;" />
 
 - 따라서 이 문제를 해결하기 위해서 모멘텀, AdaGrad, Adam과 같은 방법 들이 있습니다.
 
@@ -67,7 +85,15 @@ for i in range(10000):
 
 - **모멘텀**은 운동량을 의미하는 단어로 갱신할 가중치에 학습률과 손실 함수의 기울기가 반영된 속도 변수를 더해 결정합니다.
 
-    - 즉, 공이 둥그런 그릇의 곡면을 따라 구르듯 움직임을 보여줍니다.
+<img src="README.assets/e 6.3.png" alt="e 6.3" style="zoom:50%;" />
+
+<img src="README.assets/e 6.4.png" alt="e 6.4" style="zoom:50%;" />
+
+- 즉, 공이 둥그런 그릇의 곡면을 따라 구르듯 움직임을 보여줍니다.
+
+<img src="README.assets/fig 6-4.png" alt="fig 6-4" style="zoom:50%;" />
+
+- 이를 python으로 구현하면 다음과 같습니다.
 
 ```python
 import numpy as np
@@ -92,7 +118,9 @@ class Momentum:
 
 ```
 
-- 이 방식으로 앞선 문제를 해결하면 x축 진동은 덜하지만 y축 진동은 변화량이 커 진동함을 보여줍니다.
+- 이 방식으로 앞선 문제를 해결하면 x축 진동은 덜하지만 y축 진동은 변화량이 커 y축으로 진동함을 보여줍니다.
+
+<img src="README.assets/fig 6-5.png" alt="fig 6-5" style="zoom:50%;" />
 
 ### 6.1.5 AdaGrad
 
@@ -104,12 +132,16 @@ class Momentum:
 
 - 가장 간단한 방법은 매개변수 전체 학습률 값을 일괄적으로 낮추는 것으로 이 방식의 발전된 방식이 **AdaGrad**입니다.
 
-    - AdaGrad는 가중치를 `h`라는 손실 함수 기울기의 원소별 곱셈을 한 일정 값의 제곱근의 역수를 반영해 점차 줄여나갑니다.
+<img src="README.assets/e 6.5.png" alt="e 6.5" style="zoom:50%;" />
 
+<img src="README.assets/e 6.6.png" alt="e 6.6" style="zoom:50%;" />
+
+- AdaGrad는 가중치를 `h`라는 손실 함수 기울기의 원소별 곱셈을 한 일정 값의 제곱근의 역수를 반영해 점차 줄여나갑니다.
+  
     - 이 경우 원소별로 과거 기울기를 곱하기 때문에 매개변수마다 다르게 적용되고 학습이 진행될수록 갱신 강도가 낮아집니다.
-
+    
         - 다만 기울기가 0이 되어 더 이상 갱신되지 않는 걸 방지하는 방법으로 **RMSProp**이 있습니다.
-
+        
         - 이 방법은 과거의 모든 기울기를 반영하지 않고 과거의 기울기 일수록 반영 정도는 낮춥니다.
 
 ```python
@@ -136,6 +168,8 @@ class  AdaGrad:
 
 - 이 방식으로 위 문제를 해결하면 처음엔 크게 움직이다 점차 최소값이 될수록 변화량이 작아짐을 알 수 있습니다.
 
+<img src="README.assets/fig 6-6.png" alt="fig 6-6" style="zoom:50%;" />
+
 ### 6.1.6 Adam
 
 - **Adam**은 모멘텀과 AdaGrad의 장점을 모두 합친 기법입니다.
@@ -144,15 +178,23 @@ class  AdaGrad:
 
 - 이 방식으로 위 문제를 해결하면 둘을 적절히 섞은 듯한 그래프가 그려집니다.
 
+<img src="README.assets/fig 6-7.png" alt="fig 6-7" style="zoom:50%;" />
+
 ### 6.1.7 어느 갱신 방법을 이용할 것인가?
 
 > 6.1.7_optimizer_compare.py를 참고하면 됩니다.
 
 - 어느 방법을 사용할 지는 어느 문제를 풀어야할 지에 달려있습니다.
 
+<img src="README.assets/fig 6-8.png" alt="fig 6-8" style="zoom:50%;" />
+
 ### 6.1.8 MNIST 데이터셋으로 본 갱신 방법 비교
 
 > 6.1.8_optimizer_compare_with_mnist.py를 참고하면 됩니다.
+
+- 결과 그래프는 다음과 같습니다.
+
+<img src="README.assets/fig 6-9.png" alt="fig 6-9" style="zoom:50%;" />
 
 ## 6.2 가중치의 초기값
 
@@ -174,15 +216,23 @@ class  AdaGrad:
 
 - 데이터가 0과 1에 치우쳐 분포하면 역전파의 기울기가 점점 작아지다 사라지는 **기울기 소실**이 발생합니다.
 
+<img src="README.assets/fig 6-10.png" alt="fig 6-10" style="zoom:50%;" />
+
 - 그렇다고 데이터가 어느 한쪽에 집중되는 경우 **표현력을 제한**하는 새로운 문제가 발생합니다.
+
+<img src="README.assets/fig 6-11.png" alt="fig 6-11" style="zoom:50%;" />
 
 - 따라서 이를 적절히 조절해야하는데 가장 권장되는 방법은 **Xavier 초깃값**입니다.
 
     - Xaiver는 앞 계층의 노드가 n개 인 경우 표준편차가 `1 / sqrt(n)`이면 된다는 이론입니다.
 
-    - 다만 예제를 돌리면 일그러진 종 모양이 나오는 데 이를 해결하려면 `tanh` 함수를 사용하는 편이 좋습니다.
+<img src="README.assets/fig 6-12.png" alt="fig 6-12" style="zoom:50%;" />
 
-        - 이는 활성화 함수가 원점에서 대칭이 되어야 이상적인 분포가 나오기 때문입니다.
+- 다만 예제를 돌리면 일그러진 종 모양이 나오는 데 이를 해결하려면 `tanh` 함수를 사용하는 편이 좋습니다.
+
+    - 이는 활성화 함수가 원점에서 대칭이 되어야 이상적인 분포가 나오기 때문입니다.
+
+<img src="README.assets/fig 6-13.png" alt="fig 6-13" style="zoom:50%;" />
 
 ### 6.2.3 ReLU를 사용할 때의 가중치 초기값
 
@@ -194,9 +244,13 @@ class  AdaGrad:
 
     - He는 앞 계층의 노드가 n개일 때 표준편차가 `sqrt(2 / n)`인 정규분포를 사용합니다.
 
+<img src="README.assets/fig 6-14.png" alt="fig 6-14" style="zoom:50%;" />
+
 ### 6.2.4 MNIST 데이터셋으로 본 가중치 초깃값 비교
 
 > 6.2.4_weight_init_compare.py를 참고하면 됩니다.
+
+<img src="README.assets/fig 6-15.png" alt="fig 6-15" style="zoom:50%;" />
 
 ## 6.3 배치 정규화
 
@@ -214,11 +268,33 @@ class  AdaGrad:
 
 - 이를 위해 딥러닝 각 층에 배치 정규화 계층을 삽입합니다.
 
+<img src="README.assets/fig 6-16.png" alt="fig 6-16" style="zoom:50%;" />
+
 - 데이터 평균이 0, 분산이 1인 정규화하고 이를 활성화 함수 전이나 후에 처리합니다.
+
+    - 수식으로 나타내면 다음과 같습니다.
+
+    <img src="README.assets/e 6.7.png" alt="e 6.7" style="zoom:50%;" />
+
+- 또한, 배치 정규화 계층마다 이 데이터에 고유한 확대와 이동 변환을 수행합니다.
+
+<img src="README.assets/e 6.8.png" alt="e 6.8" style="zoom:50%;" />
+
+- 이러한 알고리즘을 바탕으로 순전파, 역전파의 계산 그래프를 표현하면 다음과 같습니다.
+
+<img src="README.assets/fig 6-17.png" alt="fig 6-17" style="zoom:50%;" />
 
 ### 6.3.2 배치 정규화의 효과
 
 > 6.3.2_batch_normalization_test.py, 6.3.2_batch_normalization.py를 참고하면 됩니다.
+
+<img src="README.assets/fig 6-18.png" alt="fig 6-18" style="zoom:50%;" />
+
+> 배치 정규화의 한 예시입니다. 전체 예시는 다음과 같습니다.
+
+<img src="README.assets/fig 6-19.png" alt="fig 6-19" style="zoom:50%;" />
+
+> 여기서 가중치 초깃값의 표준편자는 각 그래프의 상단에 나타나 있습니다.
 
 ## 6.4 바른 학습을 위해
 
@@ -229,6 +305,8 @@ class  AdaGrad:
 - **오버피팅**은 매개변수가 많고 표현력이 높은 경우, 훈련 데이터가 적은 경우 발생합니다.
 
 > 오버피팅이 일어난 예제는 6.4.1_overfit_weight_decay.py를 확인하면 됩니다.
+
+<img src="README.assets/fig 6-20.png" alt="fig 6-20" style="zoom:50%;" />
 
 ### 6.4.2 가중치 감소
 
@@ -242,6 +320,8 @@ class  AdaGrad:
 
 > 6.4.1_overfit_wwight_decay.py를 확인하면 됩니다.
 
+<img src="README.assets/fig 6-21.png" alt="fig 6-21" style="zoom:50%;" />
+
 ### 6.4.3 드롭아웃
 
 - 가중치 감소 방식은 신경망이 복잡해질수록 대응하기 어려워집니다. 이를 해결하기 위해 **드롭아웃**을 사용합니다.
@@ -250,7 +330,11 @@ class  AdaGrad:
 
     - 단, 보정을 위해 실전에는 훈련 때 삭제 안 한 비율을 곱해 출력합니다.
 
+<img src="README.assets/fig 6-22.png" alt="fig 6-22" style="zoom:50%;" />
+
 >6.4.3_overfit_dropout.py를 참고하면 됩니다.
+
+<img src="README.assets/fig 6-23.png" alt="fig 6-23" style="zoom:50%;" />
 
 #### Note
 
@@ -297,6 +381,8 @@ class  AdaGrad:
 ### 6.5.3 하이퍼파라미터 최적화 구현하기
 
 > 6.5.3_hyperparameter_optimization.py를 참고하면 됩니다.
+
+<img src="README.assets/fig 6-24.png" alt="fig 6-24" style="zoom:50%;" />
 
 ## 6.6 정리
 
