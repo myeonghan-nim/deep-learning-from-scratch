@@ -108,3 +108,13 @@
     - 6.5 Find suitable hyperparameters
 
     - 6.6 Summary
+
+- chapter07. CNN
+
+    - 7.1 Overall structure
+
+    - 7.2 Convolutional layer
+
+    - 7.3 Pooling layer
+
+    - 7.4 Simulate convolutional / pooling layer
