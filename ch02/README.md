@@ -8,25 +8,13 @@
 
 - 하나의 Perceptron은 **node**로 불리며 이전 node에서 온 신호를 가지고 동작합니다.
 
-![image-20191212215715918](README.assets/image-20191212215715918.png)
+<img src="README.assets/fig 2-1.png" alt="fig 2-1" style="zoom:50%;" />
 
 - 위의 그림은 perceptron의 예로 x1과 x2는 입력 신호, y는 출력 신호, w1, w2는 각각의 가중치를 의미합니다.
 
 - 입력 신호가 perceptron에 보내질 때 가중치가 곱해져 이들이 합쳐지는데 이 신호의 총합이 특정 한계를 넘어야 **1**을 출력합니다.
 
-```python
-import random
-
-theta = random.randint(0, float('inf'))
-x1, x2 = map(int, input().split())
-w1, w2 = map(int, input().split())
-
-y = x1 * w1 + x2 * w2
-if y > theta:
-    y = 1
-else:
-    y = 0
-```
+<img src="README.assets/e 2.1.png" alt="e 2.1" style="zoom: 67%;" />
 
 > 이와 같은 방식으로 동작합니다.
 
@@ -38,12 +26,7 @@ else:
 
 - **AND**는 입력된 두 신호가 모두 1일 때만 1을 출력하고 그 외에는 0을 출력합니다.
 
-| x1 | x2 | y |
-| :---: | :---: | :---: |
-| 0 | 0 | 0 |
-| 1 | 0 | 0 |
-| 0 | 1 | 0 |
-| 1 | 1 | 1 |
+<img src="README.assets/fig 2-2.png" alt="fig 2-2" style="zoom: 50%;" />
 
 - AND 게이트로 perceptron이 동작하기 위해서 가중치와 임계값 설정이 중요합니다.
 
@@ -51,23 +34,13 @@ else:
 
 - **NAND**는 AND의 출력 신호를 뒤집어 동작합니다. 즉, 모든 신호가 1이면 0을 출력합니다.
 
-| x1 | x2 | y |
-| :---: | :---: | :---: |
-| 0 | 0 | 1 |
-| 1 | 0 | 1 |
-| 0 | 1 | 1 |
-| 1 | 1 | 0 |
+<img src="README.assets/fig 2-3.png" alt="fig 2-3" style="zoom:50%;" />
 
 > NAND의 가중치와 임계값은 AND의 가중치와 임계값 부호를 반전하면 됩니다.
 
 - **OR**은 두 출력 신호 중 하나라도 1이면 1을 출력합니다. 즉, 모든 신호가 0이어야 0을 출력합니다.
 
-| x1 | x2 | y |
-| :---: | :---: | :---: |
-| 0 | 0 | 0 |
-| 1 | 0 | 1 |
-| 0 | 1 | 1 |
-| 1 | 1 | 1 |
+<img src="README.assets/fig 2-4.png" alt="fig 2-4" style="zoom:50%;" />
 
 #### Note
 
@@ -77,6 +50,14 @@ else:
 
 - 즉, 사람은 perceptron의 구조`model`를 고민하고 컴퓨터가 학습할 데이터를 제공하는 역할입니다.
 
+## 2.3 Perceptron 구현하기
+
+> 2.3_perceptron_intro.py를 참고하면 됩니다.
+
+- 해당 파일에서 사용되는 가중치 변수 `b`는 이러한 방식으로 동작합니다.
+
+<img src="README.assets/e 2.2.png" alt="e 2.2" style="zoom: 67%;" />
+
 ## 2.4 Perceptron의 한계
 
 ### 2.4.1 XOR
@@ -85,28 +66,30 @@ else:
 
 - 즉, 어느 한 쪽이 1일 때만 1을 출력하고 둘 다 0이거나 1이면 0을 출력합니다.
 
-| x1 | x2 | y |
-| :---: | :---: | :---: |
-| 0 | 0 | 0 |
-| 1 | 0 | 1 |
-| 0 | 1 | 1 |
-| 1 | 1 | 0 |
+<img src="README.assets/fig 2-5.png" alt="fig 2-5" style="zoom:50%;" />
 
 - 여기서 중요한 점은 XOR 게이트는 지금까지의 perceptron으로 구현할 수 없습니다.
 
     - OR 게이트는 가중치 매개변수가 존재할 때 OR 게이트를 2차원 그래프로 나타낼 수 있습니다.
 
+    <img src="README.assets/e 2.3.png" alt="e 2.3" style="zoom:50%;" />
+
     - 이 경우 가중치 직선이 하나 그어지는데 이 직선 아랫부분은 0을, 윗부분은 1을 나타냅니다.
 
-    - 하지만 XOR 게이트는 0을 출력하는 부분과 1을 출력하는 부분이 엇갈려져 있습니다.
+    <img src="README.assets/fig 2-6.png" alt="fig 2-6" style="zoom: 33%;" />
 
+    - 하지만 XOR 게이트는 0을 출력하는 부분과 1을 출력하는 부분이 엇갈려져 있습니다.
+    
+    <img src="README.assets/fig 2-7.png" alt="fig 2-7" style="zoom:33%;" />
+    
     - 따라서 XOR 게이트는 선을 그어 0과 1을 구분지을 수 없습니다.
 
 ### 2.4.2 선형과 비선형
 
 - 위에서 언급한 XOR 게이트는 직선을 그었을 때 0과 1을 나눌 수 없습니다.
-
 - 하지만 곡선으로 구분할 경우 이들을 0과 1로 나눌 수 있습니다. 이 경우를 **비선형**이라고 합니다.
+
+<img src="README.assets/fig 2-8.png" alt="fig 2-8" style="zoom:50%;" />
 
 > **선형**은 OR 게이트처럼 직선을 사용해 0과 1을 구분지을 수 있는 경우를 의미합니다.
 
@@ -116,22 +99,25 @@ else:
 
 ### 2.5.1 기존 게이트 조합하기
 
-![image-20191216214833525](README.assets/image-20191216214833525.png)
+<img src="README.assets/fig 2-9.png" alt="fig 2-9" style="zoom:67%;" />
 
 > 순서대로 **AND**, **NAND**, **OR** 게이트를 나타냅니다.
 
 - XOR 게이트는 위의 3개의 게이트를 적절히 조합해야 구성할 수 있습니다.
 
-![image-20191216215445500](README.assets/image-20191216215445500.png)
+<img src="README.assets/fig 2-10.png" alt="fig 2-10" style="zoom: 67%;" />
+
+> 추측해보세요!
+
+<img src="README.assets/fig 2-11.png" alt="fig 2-11" style="zoom:67%;" />
 
 > **XOR** 게이트
 
-| x1 | x2 | s1 | s2 | y |
-| :---: | :---: | :---: | :---: | :---: |
-| 0 | 0 | 1 | 0 | 1 |
-| 1 | 0 | 1 | 1 | 0 |
-| 0 | 1 | 1 | 1 | 0 |
-| 1 | 1 | 0 | 1 | 1 |
+<img src="README.assets/fig 2-12.png" alt="fig 2-12" style="zoom:67%;" />
+
+> **XOR** perceptron
+
+<img src="README.assets/fig 2-13.png" alt="fig 2-13" style="zoom: 67%;" />
 
 ## 2.6 NAND에서 computer까지
 
@@ -154,5 +140,3 @@ else:
 - 단층 perceptron으로 XOR 게이트를 표현할 수 없으며 2층 perceptron은 가능하다.
 
 - 단층 perceptron은 **선형 영역**을, 다층 perceptron은 **비선형 영역**을 표현할 수 있다.
-
-#### 그럼 지금부터 perceptron에 대해 공부해봅시다!
