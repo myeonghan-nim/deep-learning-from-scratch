@@ -179,3 +179,205 @@
      - 입력 데이터가 조금 변하더라도 풀링의 결과는 잘 변하지 않습니다.
 
      <img src="README.assets/fig 7-16.png" alt="fig 7-16" style="zoom:50%;" />
+
+## 7.4 합성곱/풀링 계층 구현하기
+
+- 이 두 계층을 오차역전파법에서 배운 것처럼 `forward`와 `backward` 메서드를 추가해 구현해보세요.
+
+### 7.4.1 4차원 배열
+
+- CNN에 흐르는 데이터는 4차원 입니다. 이는 python으로 다음과 같이 구현할 수 있습니다.
+
+```python
+import numpy as np
+
+x = np.random.rand(10, 1, 28, 28)  # 4차원 무작위 데이터를 생성합니다.
+print(x.shape)
+```
+
+- 이 중 특정 인덱스의 값에 접근하려면 다음과 같습니다.
+
+```python
+# 위에 이어집니다.
+print(x[0].shape)  # (1, 28, 28)
+print(x[5].shape)
+```
+
+- 또, 특정 인덱스의 데이터 특정 채널의 공간 데이터에 접근하려면 다음과 같습니다.
+
+```python
+# 위에 이어집니다.
+print(x[0, 0])  # 혹은 x[0][0]
+```
+
+- 하지만 위와 같이 복잡한 구현을 쉽게 해주는 **im2col**을 사용하면 쉽게 해결할 수 있습니다.
+
+### 7.4.2 im2col로 데이터 전개하기
+
+- 합성곱 연산을 곧이곧대로 구현하려면 for문을 여러 번 돌아야하는 문제가 발생합니다.
+
+  - 따라서 이를 해결하기 위해 **im2col**이라는 함수를 사용해 구현해보겠습니다.
+
+- im2col은 데이터를 필터링(가중치 계산)하기 좋게 전개하는 함수입니다. 다음 그림처럼 4차원을 2차원으로 변경합니다.
+
+<img src="README.assets/fig 7-17.png" alt="fig 7-17" style="zoom:50%;" />
+
+- 조금 더 구체적으로 입력 데이터 중 필터를 적용하는 영역인 3차원 블록을 한 줄로 늘어놓고 여기에 필터를 사용하는 게 im2col 방식입니다.
+
+<img src="README.assets/fig 7-18.png" alt="fig 7-18" style="zoom:50%;" />
+
+- 이처럼 보기 좋게 스트라이드를 크게 잡아 필터 적용 영역이 겹치지 않도록 했지만, 실제로 영역이 겹치는 경우가 대다수입니다.
+
+- 이 필터 적용 영역이 겹치게 되면 im2col로 전개한 후 원소 수가 원래 블록의 원소 수보다 많아집니다.
+
+  - 그래서 im2col 방식은 메모리 소비량이 많아지지만 컴퓨터에 이를 계산하는 데 탁월한 능력을 가지고 있습니다.
+
+  - 예를 들어 행렬 계산 라이브러리 등은 고도로 최적화된 큰 행렬의 곱셈을 빠르게 계산할 수 있습니다.
+
+- im2col로 데이터를 전개한 다음에 합성곱 계층의 필터를 1열로 전개하고 두 행렬의 곱을 진행하면 됩니다.
+
+> 이는 완전연결 계층의 Affine 게층에서 한 것과 거의 일치합니다.
+
+<img src="README.assets/fig 7-19.png" alt="fig 7-19" style="zoom:50%;" />
+
+- 마지막으로 출력 데이터가 2차원이므로 이를 4차원으로 변형하면 완성입니다.
+
+### 7.4.3 합성곱 계층 구현하기
+
+> 미리 구현된 함수는 ch07/commons/util.py를 참고하세요.
+
+- 우선 im2col 함수의 인터페이스는 다음과 같습니다.
+
+```python
+def im2col(input_data, filter_h, filter_w, stride=1, pad=0):
+    '''
+    input_data: 데이터 수, 채널 수, 높이, 너비로 구성된 4차원 배열 입력 데이터
+    filter_h: 필터의 높이
+    filter_w: 필터의 너비
+    stride: 스트라이드
+    pad: 패딩
+    '''
+    ...
+```
+
+- im2col은 주어진 인자를 고려해 입력 데이터를 2차원 배열로 전개합니다. 이를 사용한 예제는 다음과 같습니다.
+
+```python
+from commons.util import im2col
+import numpy as np
+
+x1 = np.random.rand(1, 3, 7, 7)  # 입력 데이터(데이터 수, 채널 수, 높이, 너비)
+col1 = im2col(x1, 5, 5, stride=1, pad=0)
+print(col1.shape)  # (9, 75)
+
+x2 = np.random.rand(10, 3, 7, 7)  # 입력 데이터 10개
+col2 = im2col(x2, 5, 5, stride=1, pad=0)
+print(col2.shape)  # (90, 75)
+```
+
+> 이처럼 배치 크기가 증가하면 출력 데이터의 크기도 증가합니다.
+
+- 이를 이용해 합성곱 계층을 구현하면 다음과 같습니다.
+
+```python
+class Convolution:
+    def __init__(self, W, b, stride=1, pad=0):
+        self.W = W
+        self.b = b
+        self.stride = stride
+        self.pad = pad
+
+    def forward(self, x):
+        FN, C, FH, FW = self.W.shape
+        N, C, H, W = x.shape
+
+        out_h = int(1 + (H + 2 * self.pad - FH) / self.stride)
+        out_w = int(1 + (W + 2 * self.pad - FW) / self.stride)
+
+        col = im2col(x, FH, FW, self.stride, self.pad)
+        col_W = self.W.reshape(FN, -1).T  # 필터를 전개합니다.
+        out = np.dot(col, col_W) + self.b
+
+        out = out.reshape(N, out_h, out_w, -1).transpose(0, 3, 1, 2)
+
+        return out
+```
+
+- 위의 코드를 해석하자면 다음과 같습니다.
+
+  0. 필터(가중치), 편향, 스트라이드, 패딩을 인수로 받아 계층을 초기화 합니다.
+
+     - 필터는 (FN, C, FH, FW)의 4차원 형상으로 각각 필터 개수, 채널, 필터 높이, 필터 너비를 의미합니다.
+
+  1. `col`을 정의하는 부분의 세 줄을 통해 im2col로 전개한 데이터와 필터의 행렬의 곱을 계산합니다.
+
+     - 여기서 `col_W`의 `reshape(FN, -1)`에서 -1은 reshape의 편의 기능으로 다차원 배열의 원소 수가 변환 후에도 동일하게 유지해줍니다.
+
+     - 예를 들어 (10, 3, 5, 5)의 750개 원소를 (10, -1)을 통하면 10개 묶음으로 (10, 75)로 만들어줍니다.
+
+  1. 마지막으로 출력 데이터를 적절한 형상으로 바꿔줍니다.
+
+     - 여기서 `transpose` 함수는 다차원 배열의 축 순서를 다음과 같이 바꿔줍니다.
+
+     <img src="README.assets/fig 7-20.png" alt="fig 7-20" style="zoom:50%;" />
+
+> 이상으로 완전연결 계층의 Affine 계층과 거의 일치하게 구현할 수 이었습니다.
+
+- 한편, 합성곱 계층의 역전파는 Affine 계층의 구현과 공통점이 많습니다.
+
+  - 다만 주의할 사항으로 역전파에서는 `col2im` 함수를 사용해야 합니다.
+
+  > 더 자세한 내용은 ch07/commons/layer.py를 확인하세요.
+
+### 7.4.4 풀링 게층 구현하기
+
+- 풀링 계층로 im2col을 통해 입력 데이터를 전개합니다.
+
+  - 다만, 채널이 독립적이라는 점이 합성곱 계층의 구현과 다른 점입니다.
+
+  <img src="README.assets/fig 7-21.png" alt="fig 7-21" style="zoom:50%;" />
+
+  - 이 전개에서 행별 최댓값을 구하고 적절한 형상으로 성형하면 다음과 같습니다.
+
+  <img src="README.assets/fig 7-22.png" alt="fig 7-22" style="zoom:50%;" />
+
+- 이를 python으로 구현하면 다음과 같습니다.
+
+```python
+class Pooling:
+    def __init__(self, pool_h, pool_w, stride=1, pad=0):
+        self.pool_h = pool_h
+        self.pool_w = pool_w
+        self.stride = stride
+        self.pad = pad
+
+    def forward(self, x):
+        N, C, H, W = x.shape
+
+        out_h = int(1 + (H - self.pool_h) / self.stride)
+        out_w = int(1 + (W - self.pool_w) / self.stride)
+
+        # 전개
+        col = im2col(x, self.pool_h, self.pool_w, self.stride, self.pad)
+        col = col.reshape(-1, self.pool_h * self.pool_w)
+
+        # 최대값
+        out = np.max(col, axis=1)
+
+        # reshape
+        out = out.reshape(N, out_h, out_w, C).transpose(0, 3, 1, 2)
+
+        return out
+```
+
+- 풀링 계층은 다음의 단계를 거칩니다.
+
+  1. 입력 데이터를 전개합니다.
+
+  2. 각 행별 최댓값을 구합니다
+
+  3. 적절한 모양으로 성형합니다.
+
+- 이상이 풀링 계층의 forward 처리이며 반면에 backward는 `ReLU` 게층에서 사용한 max의 역전파를 참고하면 됩니다.
+
+> 더 자세한 구현은 ch07/commons/layer.py를 확인하세요.
