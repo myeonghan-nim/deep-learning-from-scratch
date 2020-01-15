@@ -1,5 +1,5 @@
+from .optimizer import *
 import numpy as np
-from optimizer import *
 
 
 class Trainer:

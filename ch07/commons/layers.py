@@ -1,6 +1,6 @@
 import numpy as np
-from functions import *
-from util import im2col, col2im
+from .functions import *
+from .util import im2col, col2im
 
 
 class Relu:
