@@ -1,6 +1,6 @@
+from .functions import *
+from .util import im2col, col2im
 import numpy as np
-from commons.functions import *
-from commons.util import im2col, col2im
 
 
 class Relu:
@@ -26,9 +26,7 @@ class Sigmoid:
 
     def forward(self, x):
         out = sigmoid(x)
-
         self.out = out
-
         return out
 
     def backward(self, dout):
@@ -49,11 +47,10 @@ class Affine:
         self.db = None
 
     def forward(self, x):
-        # 텐서플로우 대응
+        # 텐서에 대응합니다.
         self.original_x_shape = x.shape
 
         x = x.reshape(x.shape[0], -1)
-
         self.x = x
 
         return np.dot(self.x, self.W) + self.b
@@ -66,14 +63,13 @@ class Affine:
 
         # 입력 데이터 모양을 변경합니다.(텐서 대응)
         dx = dx.reshape(*self.original_x_shape)
-
         return dx
 
 
 class SoftmaxWithLoss:
     def __init__(self):
         self.loss = None  # 손실함수
-        self.y = None  # softmax 출력
+        self.y = None  # Softmax 출력
         self.t = None  # 정답 레이블(원-핫 인코딩 형태)
 
     def forward(self, x, t):
@@ -123,7 +119,7 @@ class BatchNormalization:
         self.gamma = gamma
         self.beta = beta
         self.momentum = momentum
-        self.input_shape = None  # 합성곱 계층은 4차원, 완전연결 계층은 2차원
+        self.input_shape = None  # 합성곱 계층은 4차원, 완전연결 계층은 2차원입니다.
 
         # 시험할 때 사용할 평균과 분산
         self.running_mean = running_mean
@@ -144,8 +140,8 @@ class BatchNormalization:
             x = x.reshape(N, -1)
 
         out = self.__forward(x, train_flg)
-
-        return out.reshape(*self.input_shape)
+        out = out.reshape(*self.input_shape)
+        return out
 
     def __forward(self, x, train_flg):
         if self.running_mean is None:
@@ -165,10 +161,10 @@ class BatchNormalization:
             self.xc = xc
             self.xn = xn
             self.std = std
-            self.running_mean = self.momentum * \
-                self.running_mean + (1 - self.momentum) * mu
-            self.running_var = self.momentum * \
-                self.running_var + (1 - self.momentum) * var
+            self.running_mean = \
+                self.momentum * self.running_mean + (1 - self.momentum) * mu
+            self.running_var = \
+                self.momentum * self.running_var + (1 - self.momentum) * var
         else:
             xc = x - self.running_mean
             xn = xc / ((np.sqrt(self.running_var + 10e-7)))
@@ -182,18 +178,21 @@ class BatchNormalization:
 
         dx = self.__backward(dout)
         dx = dx.reshape(*self.input_shape)
-
         return dx
 
     def __backward(self, dout):
         dbeta = dout.sum(axis=0)
         dgamma = np.sum(self.xn * dout, axis=0)
+
         dxn = self.gamma * dout
         dxc = dxn / self.std
+
         dstd = -np.sum((dxn * self.xc) / (self.std * self.std), axis=0)
         dvar = 0.5 * dstd / self.std
+
         dxc += (2.0 / self.batch_size) * self.xc * dvar
         dmu = np.sum(dxc, axis=0)
+
         dx = dxc - dmu / self.batch_size
 
         self.dgamma = dgamma
@@ -209,7 +208,7 @@ class Convolution:
         self.stride = stride
         self.pad = pad
 
-        # 중간 데이터（backward용）
+        # 중간 데이터backward용）
         self.x = None
         self.col = None
         self.col_W = None
@@ -221,8 +220,8 @@ class Convolution:
     def forward(self, x):
         FN, C, FH, FW = self.W.shape
         N, C, H, W = x.shape
-        out_h = 1 + int((H + 2*self.pad - FH) / self.stride)
-        out_w = 1 + int((W + 2*self.pad - FW) / self.stride)
+        out_h = 1 + int((H + 2 * self.pad - FH) / self.stride)
+        out_w = 1 + int((W + 2 * self.pad - FW) / self.stride)
 
         col = im2col(x, FH, FW, self.stride, self.pad)
         col_W = self.W.reshape(FN, -1).T
@@ -283,16 +282,13 @@ class Pooling:
         pool_size = self.pool_h * self.pool_w
 
         dmax = np.zeros((dout.size, pool_size))
-        dmax[np.arange(self.arg_max.size), self.arg_max.flatten()] = \
-            dout.flatten()
+        dmax[np.arange(self.arg_max.size),
+             self.arg_max.flatten()] = dout.flatten()
         dmax = dmax.reshape(dout.shape + (pool_size,))
 
         dcol = dmax.reshape(dmax.shape[0] * dmax.shape[1] * dmax.shape[2], -1)
 
-        dx = col2im(
-            dcol,
-            self.x.shape, self.pool_h,
-            self.pool_w, self.stride, self.pad
-        )
+        dx = col2im(dcol, self.x.shape, self.pool_h,
+                    self.pool_w, self.stride, self.pad)
 
         return dx

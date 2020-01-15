@@ -1,7 +1,7 @@
-import numpy as np
+from .gradient import numerical_gradient
+from .layers import *
 from collections import OrderedDict
-from commons.layers import *
-from commons.gradient import numerical_gradient
+import numpy as np
 
 
 class MultiLayerNetExtend:
@@ -11,24 +11,22 @@ class MultiLayerNetExtend:
 
     Parameters
     ----------
-    input_size : 입력 크기（MNIST의 경우엔 784）
-    hidden_size_list : 각 은닉층의 뉴런 수를 담은 리스트（e.g. [100, 100, 100]）
-    output_size : 출력 크기（MNIST의 경우엔 10）
-    activation : 활성화 함수 - 'relu' 혹은 'sigmoid'
-    weight_init_std : 가중치의 표준편차 지정（e.g. 0.01）
+    input_size: 입력 크기（MNIST의 경우엔 784）
+    hidden_size_list: 각 은닉층의 뉴런 수를 담은 리스트（e.g. [100, 100, 100]）
+    output_size: 출력 크기（MNIST의 경우엔 10）
+    activation: 활성화 함수 - 'relu' 혹은 'sigmoid'
+    weight_init_std: 가중치의 표준편차 지정（e.g. 0.01）
         'relu'나 'he'로 지정하면 'He 초깃값'으로 설정
         'sigmoid'나 'xavier'로 지정하면 'Xavier 초깃값'으로 설정
-    weight_decay_lambda : 가중치 감소(L2 법칙)의 세기
-    use_dropout : 드롭아웃 사용 여부
-    dropout_ration : 드롭아웃 비율
-    use_batchNorm : 배치 정규화 사용 여부
+    weight_decay_lambda: 가중치 감소(L2 법칙)의 세기
+    use_dropout: 드롭아웃 사용 여부
+    dropout_ration: 드롭아웃 비율
+    use_batchNorm: 배치 정규화 사용 여부
     '''
 
-    def __init__(
-        self, input_size, hidden_size_list, output_size,
-        activation='relu', weight_init_std='relu', weight_decay_lambda=0,
-        use_dropout=False, dropout_ration=0.5, use_batchnorm=False
-    ):
+    def __init__(self, input_size, hidden_size_list, output_size,
+                 activation='relu', weight_init_std='relu', weight_decay_lambda=0,
+                 use_dropout=False, dropout_ration=0.5, use_batchnorm=False):
         self.input_size = input_size
         self.output_size = output_size
         self.hidden_size_list = hidden_size_list
@@ -44,33 +42,26 @@ class MultiLayerNetExtend:
         # 계층 생성
         activation_layer = {'sigmoid': Sigmoid, 'relu': Relu}
         self.layers = OrderedDict()
-        for idx in range(1, self.hidden_layer_num+1):
-            self.layers['Affine' + str(idx)] = Affine(
-                self.params['W' + str(idx)], self.params['b' + str(idx)]
-            )
+        for idx in range(1, self.hidden_layer_num + 1):
+            self.layers['Affine' + str(idx)] = Affine(self.params['W' + str(idx)],
+                                                      self.params['b' + str(idx)])
             if self.use_batchnorm:
-                self.params[
-                    'gamma' + str(idx)
-                ] = np.ones(hidden_size_list[idx-1])
-                self.params[
-                    'beta' + str(idx)
-                ] = np.zeros(hidden_size_list[idx-1])
-                self.layers['BatchNorm' + str(idx)] = BatchNormalization(
-                    self.params['gamma' + str(idx)],
-                    self.params['beta' + str(idx)]
-                )
+                self.params['gamma' + str(idx)] = \
+                    np.ones(hidden_size_list[idx - 1])
+                self.params['beta' + str(idx)] = \
+                    np.zeros(hidden_size_list[idx - 1])
+                self.layers['BatchNorm' + str(idx)] = BatchNormalization(self.params['gamma' + str(idx)],
+                                                                         self.params['beta' + str(idx)])
 
-            self.layers[
-                'Activation_function' + str(idx)
-            ] = activation_layer[activation]()
+            self.layers['Activation_function' + str(idx)
+                        ] = activation_layer[activation]()
 
             if self.use_dropout:
                 self.layers['Dropout' + str(idx)] = Dropout(dropout_ration)
 
         idx = self.hidden_layer_num + 1
-        self.layers['Affine' + str(idx)] = Affine(
-            self.params['W' + str(idx)], self.params['b' + str(idx)]
-        )
+        self.layers['Affine' + str(idx)] = Affine(self.params['W' + str(idx)],
+                                                  self.params['b' + str(idx)])
 
         self.last_layer = SoftmaxWithLoss()
 
@@ -80,12 +71,12 @@ class MultiLayerNetExtend:
 
         Parameters
         ----------
-        weight_init_std : 가중치의 표준편차 지정（e.g. 0.01）
+        weight_init_std: 가중치의 표준편차 지정（e.g. 0.01）
             'relu'나 'he'로 지정하면 'He 초깃값'으로 설정
             'sigmoid'나 'xavier'로 지정하면 'Xavier 초깃값'으로 설정
         '''
-        all_size_list = [self.input_size] + \
-            self.hidden_size_list + [self.output_size]
+        all_size_list = \
+            [self.input_size] + self.hidden_size_list + [self.output_size]
 
         for idx in range(1, len(all_size_list)):
             scale = weight_init_std
@@ -108,12 +99,12 @@ class MultiLayerNetExtend:
 
     def loss(self, x, t, train_flg=False):
         '''
-        손실 함수를 구한다.
+        손실 함수를 구합니다.
 
         Parameters
         ----------
-        x : 입력 데이터
-        t : 정답 레이블 
+        x: 입력 데이터
+        t: 정답 레이블 
         '''
         y = self.predict(x, train_flg)
 
@@ -136,12 +127,12 @@ class MultiLayerNetExtend:
 
     def numerical_gradient(self, X, T):
         '''
-        기울기를 구한다(수치 미분).
+        기울기를 구합니다.(수치 미분)
 
         Parameters
         ----------
-        x : 입력 데이터
-        t : 정답 레이블
+        x: 입력 데이터
+        t: 정답 레이블
 
         Returns
         -------
@@ -153,21 +144,17 @@ class MultiLayerNetExtend:
             return self.loss(X, T, train_flg=True)
 
         grads = {}
-        for idx in range(1, self.hidden_layer_num+2):
-            grads['W' + str(idx)] = numerical_gradient(
-                loss_W, self.params['W' + str(idx)]
-            )
-            grads['b' + str(idx)] = numerical_gradient(
-                loss_W, self.params['b' + str(idx)]
-            )
+        for idx in range(1, self.hidden_layer_num + 2):
+            grads['W' + str(idx)] = numerical_gradient(loss_W,
+                                                       self.params['W' + str(idx)])
+            grads['b' + str(idx)] = numerical_gradient(loss_W,
+                                                       self.params['b' + str(idx)])
 
-            if self.use_batchnorm and idx != self.hidden_layer_num+1:
-                grads['gamma' + str(idx)] = numerical_gradient(
-                    loss_W, self.params['gamma' + str(idx)]
-                )
-                grads['beta' + str(idx)] = numerical_gradient(
-                    loss_W, self.params['beta' + str(idx)]
-                )
+            if self.use_batchnorm and idx != self.hidden_layer_num + 1:
+                grads['gamma' + str(idx)] = numerical_gradient(loss_W,
+                                                               self.params['gamma' + str(idx)])
+                grads['beta' + str(idx)] = numerical_gradient(loss_W,
+                                                              self.params['beta' + str(idx)])
 
         return grads
 
@@ -192,11 +179,9 @@ class MultiLayerNetExtend:
             grads['b' + str(idx)] = self.layers['Affine' + str(idx)].db
 
             if self.use_batchnorm and idx != self.hidden_layer_num+1:
-                grads[
-                    'gamma' + str(idx)
-                ] = self.layers['BatchNorm' + str(idx)].dgamma
-                grads[
-                    'beta' + str(idx)
-                ] = self.layers['BatchNorm' + str(idx)].dbeta
+                grads['gamma' + str(idx)
+                      ] = self.layers['BatchNorm' + str(idx)].dgamma
+                grads['beta' + str(idx)
+                      ] = self.layers['BatchNorm' + str(idx)].dbeta
 
         return grads

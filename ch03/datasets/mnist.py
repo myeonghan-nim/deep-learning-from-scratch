@@ -72,13 +72,13 @@ def _convert_numpy():
     dataset['train_label'] = _load_label(key_file['train_label'])
     dataset['test_img'] = _load_img(key_file['test_img'])
     dataset['test_label'] = _load_label(key_file['test_label'])
-
     return dataset
 
 
 def init_mnist():
     download_mnist()
     dataset = _convert_numpy()
+
     print('Creating pickle file ...')
     with open(save_file, 'wb') as f:
         pickle.dump(dataset, f, -1)
@@ -89,27 +89,23 @@ def _change_one_hot_label(X):
     T = np.zeros((X.size, 10))
     for idx, row in enumerate(T):
         row[X[idx]] = 1
-
     return T
 
 
 def load_mnist(normalize=True, flatten=True, one_hot_label=False):
-    '''MNIST 데이터셋 읽기
+    '''
+    MNIST 데이터셋 읽기
 
     Parameters
     ----------
-
-    normalize : 이미지의 픽셀 값을 0.0~1.0 사이의 값으로 정규화할지 정한다.
-
-    one_hot_label : 
+    normalize: 이미지의 픽셀 값을 0.0~1.0 사이의 값으로 정규화할지 정한다.
+    one_hot_label: 
         one_hot_label이 True면、레이블을 원-핫(one-hot) 배열로 돌려준다.
         one-hot 배열은 예를 들어 [0,0,1,0,0,0,0,0,0,0]처럼 한 원소만 1인 배열이다.
-
-    flatten : 입력 이미지를 1차원 배열로 만들지를 정한다. 
+    flatten: 입력 이미지를 1차원 배열로 만들지를 정한다. 
 
     Returns
     -------
-
     (훈련 이미지, 훈련 레이블), (시험 이미지, 시험 레이블)
     '''
     if not os.path.exists(save_file):

@@ -24,10 +24,8 @@ def numerical_gradient_2d(f, X):
         return _numerical_gradient_1d(f, X)
     else:
         grad = np.zeros_like(X)
-
         for idx, x in enumerate(X):
             grad[idx] = _numerical_gradient_1d(f, x)
-
         return grad
 
 

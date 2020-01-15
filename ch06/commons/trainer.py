@@ -1,18 +1,16 @@
+from .optimizer import *
 import numpy as np
-from commons.optimizer import *
 
 
 class Trainer:
     '''
-    신경망 훈련을 대신 해주는 클래스
+    신경망 훈련을 대신 해주는 클래스입니다.
     '''
 
-    def __init__(
-        self, network, x_train, t_train, x_test, t_test,
-        epochs=20, mini_batch_size=100,
-        optimizer='SGD', optimizer_param={'lr': 0.01},
-        evaluate_sample_num_per_epoch=None, verbose=True
-    ):
+    def __init__(self, network, x_train, t_train, x_test, t_test,
+                 epochs=20, mini_batch_size=100,
+                 optimizer='SGD', optimizer_param={'lr': 0.01},
+                 evaluate_sample_num_per_epoch=None, verbose=True):
         self.network = network
         self.verbose = verbose
         self.x_train = x_train
@@ -24,13 +22,10 @@ class Trainer:
         self.evaluate_sample_num_per_epoch = evaluate_sample_num_per_epoch
 
         # optimzer
-        optimizer_class_dict = {
-            'sgd': SGD, 'momentum': Momentum, 'nesterov': Nesterov,
-            'adagrad': AdaGrad, 'rmsprpo': RMSprop, 'adam': Adam
-        }
-        self.optimizer = optimizer_class_dict[
-            optimizer.lower()
-        ](**optimizer_param)
+        optimizer_class_dict = {'sgd': SGD, 'momentum': Momentum, 'nesterov': Nesterov,
+                                'adagrad': AdaGrad, 'rmsprpo': RMSprop, 'adam': Adam}
+        self.optimizer = optimizer_class_dict[optimizer.lower()
+                                              ](**optimizer_param)
 
         self.train_size = x_train.shape[0]
         self.iter_per_epoch = max(self.train_size / mini_batch_size, 1)
@@ -57,7 +52,6 @@ class Trainer:
 
         if self.current_iter % self.iter_per_epoch == 0:
             self.current_epoch += 1
-
             x_train_sample, t_train_sample = self.x_train, self.t_train
             x_test_sample, t_test_sample = self.x_test, self.t_test
             if not self.evaluate_sample_num_per_epoch is None:
@@ -71,12 +65,10 @@ class Trainer:
             self.test_acc_list.append(test_acc)
 
             if self.verbose:
-                print(
-                    '=== epoch:' + str(self.current_epoch) +
-                    ', train acc:' + str(train_acc) +
-                    ', test acc:' + str(test_acc) +
-                    ' ==='
-                )
+                print('=== epoch:' + str(self.current_epoch) +
+                      ', train acc:' + str(train_acc) +
+                      ', test acc:' + str(test_acc) +
+                      ' ===')
         self.current_iter += 1
 
     def train(self):

@@ -29,8 +29,8 @@ class Momentum:
 
 class Nesterov:
     '''
-    Nesterov's Accelerated Gradient (http://arxiv.org/abs/1212.0901)
-    NAG는 모멘텀에서 한 단계 발전한 방법입니다. (http://newsight.tistory.com/224)
+    Nesterov's Accelerated Gradient(http://arxiv.org/abs/1212.0901)
+    NAG는 모멘텀에서 한 단계 발전한 방법입니다.(http://newsight.tistory.com/224)
     '''
 
     def __init__(self, lr=0.01, momentum=0.9):
@@ -86,7 +86,9 @@ class RMSprop:
 
 
 class Adam:
-    '''Adam (http://arxiv.org/abs/1412.6980v8)'''
+    '''
+    Adam(http://arxiv.org/abs/1412.6980v8)
+    '''
 
     def __init__(self, lr=0.001, beta1=0.9, beta2=0.999):
         self.lr = lr
@@ -104,8 +106,8 @@ class Adam:
                 self.v[key] = np.zeros_like(val)
 
         self.iter += 1
-        lr_t = self.lr * np.sqrt(1.0 - self.beta2 ** self.iter) \
-            / (1.0 - self.beta1 ** self.iter)
+        lr_t = self.lr * np.sqrt(1.0 - self.beta2 ** self.iter
+                                 ) / (1.0 - self.beta1 ** self.iter)
 
         for key in params.keys():
             # self.m[key] = self.beta1 * self.m[key] + (1 - self.beta1) * grads[key]
