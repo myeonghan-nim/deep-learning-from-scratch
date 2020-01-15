@@ -381,3 +381,141 @@ class Pooling:
 - 이상이 풀링 계층의 forward 처리이며 반면에 backward는 `ReLU` 게층에서 사용한 max의 역전파를 참고하면 됩니다.
 
 > 더 자세한 구현은 ch07/commons/layer.py를 확인하세요.
+
+## 7.5 CNN 구현하기
+
+- 본격적으로 CNN을 구현해보면 다음과 같은 형태를 구현하게 됩니다.
+
+<img src="README.assets/fig 7-23.png" alt="fig 7-23" style="zoom:50%;" />
+
+- 위의 CNN을 구성할 `SimpleConvNet`은 다음과 같이 인자를 받고 시작합니다.
+
+| 인자            | 설명                                    |
+| :-------------- | :-------------------------------------- |
+| input_dim       | 입력 데이터(채널 수, 높이, 너비)의 차원 |
+| conv_param      | 합성곱 계층의 하이퍼파라미터 dict       |
+| - filter_num    | 필터의 수                               |
+| - filter_size   | 필터의 크기                             |
+| - stride        | 스트라이드                              |
+| - pad           | 패딩                                    |
+| hidden_size     | 은닉층(완전연결)의 뉴런 수              |
+| output_size     | 출력층(완전연결)의 뉴런 수              |
+| weight_init_std | 초기화 할 때 가중치 표준편차            |
+
+- 이 `SimpleConvNet`을 3단계로 나눠서 설명하면 다음과 같습니다.
+
+  1. part01
+
+  ```python
+  class SimpleConvNet:
+      def __init__(self, input_dim=(1, 28, 28),
+                   conv_param={'filter_num': 30, 'filter_size': 5,
+                               'stride': 1, 'pad': 0}
+                   hidden_size=100, output_size=10, weight_init_std=0.01):
+          filter_num = conv_param['filter_num']
+          filter_size = conv_param['filter_size']
+          filter_stride = conv_param['stride']
+          filter_pad = conv_param['pad']
+
+          input_size = input_dim[1]
+
+          conv_output_size = (input_size - filter_size + 2 * filter_pad) / filter_stride + 1
+          pool_output_size = int(filter_num * ((conv_output_size / 2) ** 2))
+  ```
+
+  - 여기서 초기화 인수로 주어진 합성곱 계층의 하이퍼파라미터를 짇셔너리에서 꺼냅니다.
+
+  - 그리고 합성곱 계층의 출력 크기를 계산합니다.
+
+  2. part02
+
+  ```python
+      self.params = {}
+      self.params['W1'] = weight_init_std * np.random.rand(filter_num, input_dim[0],
+                                                           filter_size, filter_size)
+      self.params['b1'] = np.zeros(filter_num)
+      self.params['W2'] = weight_init_std * np.random.rand(pool_output_size, hidden_size)
+      self.params['b3'] = np.zeros(hidden_size)
+      self.params['W3'] = weight_init_std * np.random.rand(hidden_size, output_size)
+      self.params['b3'] = np.zeros(output_size)
+  ```
+
+  - 학습에 필요한 매개변수인 합성곱 계층과 나머지 두 완전연결 계층의 가중치와 편향을 params에 저장합니다.
+
+  - 그리고 CNN을 구성하는 계층들을 생성합니다.
+
+  3. part03
+
+  ```python
+      self.layers = OrderedDict()
+      self.layers['Conv1'] = Convolution(self.params['W1'], self.params['b1'],
+                                         self.params['stride'], self.params['pad'])
+      self.layers['Relu1'] = Relu()
+      self.layers['Pool1'] = Pooling(pool_h=2, pool_w=2, stride=2)
+      self.layers['Affine1'] = Affine(self.params['W2'], self.params['b2'])
+      self.layers['Relu2'] = Relu()
+      self.layers['Affine2'] = Affine(self.params['W3'], self.params['b3'])
+
+      self.last_layer = SoftmaxWithLoss()
+  ```
+
+  - `OrderedDict`를 사용해 계층을 순서대로 추가하고 마지막 계층인 `SoftmaxWithLoss`는 별도의 변수에 저장합니다.
+
+  - 이렇게 초기화를 마치고 이를 추론하는 `predict`와 손실 함수를 계산하는 `loss` 메서드를 구현합니다.
+
+  4. part04
+
+  ```python
+      def predict(self, x):
+          for layer in self.layers.values():
+              x = layer.forward(x)
+          return x
+
+      def loss(self, x, t):
+          y = self.predict(x)
+          return self.last_layer.forward(y, t)
+  ```
+
+  - part04에서 x는 입력 데이터, t는 정답 레이블입니다.
+
+  - predict는 layers의 계층을 앞에서 부터 차례로 호출하며 그 결과를 다음 게층에 전달합니다.
+
+  - 반면, loss는 predict의 결과를 인자로 마지막 층의 forward를 계산합니다.
+
+  - 이어 오차역전파법으로 기울기를 구하는 방법은 다음과 같습니다.
+
+  ```python
+      def gradient(self, x, t):
+          # forward
+          self.loss(x, t)
+
+          # backward
+          dout = 1
+          dout = self.last_layer.backward(dout)
+
+          layers = list(self.layers.values())
+          layers.reverse()
+          for layer in layers:
+              dout = layer.backward(dout)
+
+          # save result
+          grads = {}
+          grads['W1'] = self.layers['Conv1'].dW
+          grads['b1'] = self.layers['Conv2'].dW
+          grads['W2'] = self.layers['Affine1'].dW
+          grads['b2'] = self.layers['Affine1'].dW
+          grads['W3'] = self.layers['Affine2'].dW
+          grads['b3'] = self.layers['Affine2'].dW
+
+          return grads
+  ```
+
+  - 기울기를 오차역전파법으로 구하는 과정에서 순전파와 역전파를 반복하여 이를 dict에 담아 저장합니다.
+
+- 이를 기반으로 MNIST 데이터셋을 학습해보는 시간입니다.
+
+> ch07/7.5_simulate_CNN.py를 확인하세요.
+
+- 결과가 매우 정확하게 나온 것을 보면 비교적 작은 네트워크로서 아주 높은 결과를 얻은 것입니다.
+
+  - 이처럼 합성곱 계층과 풀링 계층은 이미지 인식에 필수적인 모듈로 CNN을 통해 더 높은 정확도를 얻을 수 있습니다.
