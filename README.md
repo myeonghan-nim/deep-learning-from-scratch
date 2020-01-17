@@ -125,3 +125,7 @@
   - 7.3 Pooling layer
 
   - 7.4 Simulate convolutional / pooling layer
+
+  - 7.5 Simulate CNN
+
+  - 7.6 Visualize CNN
