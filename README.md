@@ -20,6 +20,14 @@
 
   > 이 외에도 추가로 필요한 라이브러리가 있다면 `pip install`로 설치하면 됩니다.
 
+- backups에 대해
+
+  - 해당 폴더는 다음 두 파일을 가지고 있습니다.
+
+    1. `equations_and_figures.zip`: 각 장에 사용된 수식, 그림들을 압축한 파일입니다.
+
+    2. `params.pkl`: chapter07. CNN에 사용된 파라미터의 정보가 담긴 `pickle` 파일입니다.
+
 ## 0. What I learned
 
 - [chapter01. Hello, Python](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch01)
