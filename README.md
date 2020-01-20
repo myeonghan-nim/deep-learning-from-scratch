@@ -129,3 +129,7 @@
   - 7.5 Simulate CNN
 
   - 7.6 Visualize CNN
+
+  - 7.7 Representative CNN
+
+  - 7.8 Summary
