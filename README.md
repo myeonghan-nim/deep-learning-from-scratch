@@ -30,7 +30,7 @@
 
 ## 0. What I learned
 
-- [chapter01. Hello, Python](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch01)
+- [chapter01. Hello, Python](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapter01)
 
   - 1.1 What is python?
 
@@ -46,7 +46,7 @@
 
   - 1.7 Summary
 
-- [chapter02. Perceptron](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch02)
+- [chapter02. Perceptron](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapter02)
 
   - 2.1 What is perceptron?
 
@@ -62,7 +62,7 @@
 
   - 2.7 Summary
 
-- [chapter03. Neural Network](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch03)
+- [chapter03. Neural Network](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapter03)
 
   - 3.1 from perceptron to neural network
 
@@ -78,7 +78,7 @@
 
   - 3.7 Summary
 
-- [chapter04. Learning Neural Network](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch04)
+- [chapter04. Learning Neural Network](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapter04)
 
   - 4.1 Learn from data!
 
@@ -92,7 +92,7 @@
 
   - 4.6 Summary
 
-- [chapter05. Backpropagation](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch05)
+- [chapter05. Backpropagation](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapter05)
 
   - 5.1 Calculation graph
 
@@ -110,7 +110,7 @@
 
   - 5.8 Summary
 
-- [chapter06. Technics about learning](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch06)
+- [chapter06. Technics about learning](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapter06)
 
   - 6.1 Renewal parameters
 
@@ -124,7 +124,7 @@
 
   - 6.6 Summary
 
-- [chapter07. CNN](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/ch07)
+- [chapter07. CNN](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapter07)
 
   - 7.1 Overall structure
 
@@ -141,3 +141,7 @@
   - 7.7 Representative CNN
 
   - 7.8 Summary
+
+- [chapter08. Deep Learning]()
+
+  - 8.1 More deeper
