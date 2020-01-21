@@ -244,7 +244,7 @@ print(x[0, 0])  # 혹은 x[0][0]
 
 ### 7.4.3 합성곱 계층 구현하기
 
-> 미리 구현된 함수는 ch07/commons/util.py를 참고하세요.
+> 미리 구현된 함수는 commons/util.py를 참고하세요.
 
 - 우선 im2col 함수의 인터페이스는 다음과 같습니다.
 
@@ -327,7 +327,7 @@ class Convolution:
 
   - 다만 주의할 사항으로 역전파에서는 `col2im` 함수를 사용해야 합니다.
 
-  > 더 자세한 내용은 ch07/commons/layer.py를 확인하세요.
+  > 더 자세한 내용은 commons/layer.py를 확인하세요.
 
 ### 7.4.4 풀링 게층 구현하기
 
@@ -380,7 +380,7 @@ class Pooling:
 
 - 이상이 풀링 계층의 forward 처리이며 반면에 backward는 `ReLU` 게층에서 사용한 max의 역전파를 참고하면 됩니다.
 
-> 더 자세한 구현은 ch07/commons/layer.py를 확인하세요.
+> 더 자세한 구현은 commons/layer.py를 확인하세요.
 
 ## 7.5 CNN 구현하기
 
@@ -514,7 +514,7 @@ class Pooling:
 
 - 이를 기반으로 MNIST 데이터셋을 학습해보는 시간입니다.
 
-> ch07/7.5_simulate_CNN.py를 확인하세요.
+> 7.5_simulate_CNN.py를 확인하세요.
 
 - 결과가 매우 정확하게 나온 것을 보면 비교적 작은 네트워크로서 아주 높은 결과를 얻은 것입니다.
 
@@ -530,7 +530,7 @@ class Pooling:
 
 - 이를 시각화한 이미지는 다음과 같습니다.
 
-> 추가적으로 ch07/7.6.1_visualize_filter.py를 같이 참고해주세요.
+> 추가적으로 7.6.1_visualize_filter.py를 같이 참고해주세요.
 
 <img src="README.assets/fig 7-24.png" alt="fig 7-24" style="zoom:50%;" />
 

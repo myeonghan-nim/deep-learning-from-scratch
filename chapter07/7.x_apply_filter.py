@@ -30,7 +30,7 @@ network = SimpleConvNet(input_dim=(1, 28, 28),
 network.load_params('params.pkl')
 filter_show(network.params['W1'], 16)
 
-img = imread('ch07/datasets/lena_gray.png')
+img = imread('chapter07/datasets/lena_gray.png')
 img = img.reshape(1, 1, *img.shape)
 
 fig = plt.figure()
