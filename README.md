@@ -145,3 +145,5 @@
 - [chapter08. Deep Learning]()
 
   - 8.1 More deeper
+
+  - 8.2 The early history of deep learning
