@@ -142,8 +142,10 @@
 
   - 7.8 Summary
 
-- [chapter08. Deep Learning]()
+- [chapter08. Deep Learning](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapter08)
 
   - 8.1 More deeper
 
   - 8.2 The early history of deep learning
+
+  - 8.3 More faster(speedy deep learning)
