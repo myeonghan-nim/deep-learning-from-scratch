@@ -149,3 +149,9 @@
   - 8.2 The early history of deep learning
 
   - 8.3 More faster(speedy deep learning)
+
+  - 8.4 Application of deep learning
+
+  - 8.5 Future of deep learning
+
+  - 8.6 Summary
