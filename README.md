@@ -155,3 +155,11 @@
   - 8.5 Future of deep learning
 
   - 8.6 Summary
+
+- [AppendixA. Softmax-with-Loss Layer`s Calculation Graph](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapterAA)
+
+  - A.1 Forward
+
+  - A.2 Backward
+
+  - A.3 Summary
