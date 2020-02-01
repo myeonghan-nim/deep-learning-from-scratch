@@ -11,8 +11,10 @@ def AND(x1, x2):  # AND perceptron
         return 0
 
 
+print('AND:', end=' ')
 for i, j in [(0, 0), (1, 0), (0, 1), (1, 1)]:
-    print(AND(i, j))
+    print(AND(i, j), end=' ')
+print()
 
 # advanced perceptron with weight bias
 x = np.array([0, 1])
@@ -20,8 +22,7 @@ w = np.array([0.5, 0.5])
 b = -0.7  # theta
 
 temp = x * w
-print(np.sum(temp))
-print(np.sum(temp) + b)
+print('bias calculation:', np.sum(temp), np.sum(temp) + b)
 
 
 def AND(x1, x2):  # implement weight bias
@@ -36,8 +37,10 @@ def AND(x1, x2):  # implement weight bias
         return 0
 
 
+print('advanced AND:', end=' ')
 for i, j in [(0, 0), (1, 0), (0, 1), (1, 1)]:
-    print(AND(i, j))
+    print(AND(i, j), end=' ')
+print()
 
 
 def NAND(x1, x2):
@@ -52,8 +55,10 @@ def NAND(x1, x2):
         return 0
 
 
+print('NAND:', end=' ')
 for i, j in [(0, 0), (1, 0), (0, 1), (1, 1)]:
-    print(NAND(i, j))
+    print(NAND(i, j), end=' ')
+print()
 
 
 def OR(x1, x2):
@@ -68,5 +73,7 @@ def OR(x1, x2):
         return 0
 
 
+print('OR:', end=' ')
 for i, j in [(0, 0), (1, 0), (0, 1), (1, 1)]:
-    print(OR(i, j))
+    print(OR(i, j), end=' ')
+print()

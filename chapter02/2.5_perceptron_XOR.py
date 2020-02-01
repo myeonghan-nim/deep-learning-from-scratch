@@ -44,5 +44,7 @@ def XOR(x1, x2):
     return y
 
 
+print('XOR:', end=' ')
 for i, j in [(0, 0), (1, 0), (0, 1), (1, 1)]:
-    print((i, j), '->', XOR(i, j))
+    print((i, j), '->', XOR(i, j), end=' ')
+print()
