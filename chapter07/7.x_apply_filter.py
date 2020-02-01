@@ -26,11 +26,11 @@ network = SimpleConvNet(input_dim=(1, 28, 28),
                                     'pad': 0, 'stride': 1},
                         hidden_size=100, output_size=10, weight_init_std=0.01)
 
-# 학습된 가중치
-network.load_params('params.pkl')
+# learned bias
+network.load_params('./chapter07/params.pkl')
 filter_show(network.params['W1'], 16)
 
-img = imread('chapter07/datasets/lena_gray.png')
+img = imread('./chapter07/datasets/lena_gray.png')
 img = img.reshape(1, 1, *img.shape)
 
 fig = plt.figure()
@@ -38,10 +38,10 @@ fig = plt.figure()
 w_idx = 1
 for i in range(16):
     w = network.params['W1'][i]
-    b = 0  # network.params['b1'][i]
+    b = network.params['b1'][i]
 
     w = w.reshape(1, *w.shape)
-    # b = b.reshape(1, *b.shape)
+    b = b.reshape(1, *b.shape)
     conv_layer = Convolution(w, b)
     out = conv_layer.forward(img)
     out = out.reshape(out.shape[2], out.shape[3])

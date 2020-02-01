@@ -4,12 +4,11 @@ from cnn import SimpleConvNet
 import matplotlib.pyplot as plt
 import numpy as np
 
-# 데이터 읽기
 (x_train, t_train), (x_test, t_test) = load_mnist(flatten=False)
 
-# 시간이 오래 걸릴 경우 데이터를 줄이세요.
-# x_train, t_train = x_train[:5000], t_train[:5000]
-# x_test, t_test = x_test[:1000], t_test[:1000]
+# if takes long time, reduce datas
+x_train, t_train = x_train[:5000], t_train[:5000]
+x_test, t_test = x_test[:1000], t_test[:1000]
 
 max_epochs = 20
 
@@ -24,11 +23,11 @@ trainer = Trainer(network, x_train, t_train, x_test, t_test,
                   evaluate_sample_num_per_epoch=1000)
 trainer.train()
 
-# 매개변수를 보존합니다.
-network.save_params('params.pkl')
+# save parameters
+network.save_params('./chapter07/params.pkl')
 print('Saved Network Parameters!')
 
-# 그래프를 그립니다.
+# draw graph
 markers = {'train': 'o', 'test': 's'}
 x = np.arange(max_epochs)
 plt.plot(x, trainer.train_acc_list, marker='o', label='train', markevery=2)

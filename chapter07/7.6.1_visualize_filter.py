@@ -21,8 +21,8 @@ def filter_show(filters, nx=8, margin=3, scale=10):
     plt.show()
 
 
-network = SimpleConvNet()  # 랜덤 초기화 후 가중치
+network = SimpleConvNet()  # bias after random init
 filter_show(network.params['W1'])
 
-network.load_params('chapter07/params.pkl')  # 학습된 가중치
+network.load_params('chapter07/params.pkl')  # learned bias
 filter_show(network.params['W1'])
