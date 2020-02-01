@@ -1,8 +1,7 @@
-import numpy as np
-from datasets.mnist import load_mnist
 from commons.neural_network import TwoLayerNet
+from datasets.mnist import load_mnist
+import numpy as np
 
-# 데이터 읽기
 (x_train, t_train), (x_test, t_test) = load_mnist(
     normalize=True, one_hot_label=True
 )
@@ -15,7 +14,7 @@ t_batch = t_train[:3]
 grad_numerical = network.numerical_gradient(x_batch, t_batch)
 grad_backprop = network.gradient(x_batch, t_batch)
 
-# 각 가중치의 절대 오차의 평균을 구한다.
+# calculate average of absolute error of each bias
 for key in grad_numerical.keys():
     diff = np.average(np.abs(grad_backprop[key] - grad_numerical[key]))
     print(key + ':' + str(diff))

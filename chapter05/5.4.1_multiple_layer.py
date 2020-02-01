@@ -1,4 +1,4 @@
-from commons.layer_naive import *
+from commons.layers_naive import *
 
 apple = 100
 apple_num = 2

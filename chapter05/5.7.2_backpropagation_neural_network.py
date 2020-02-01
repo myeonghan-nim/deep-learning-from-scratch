@@ -1,12 +1,12 @@
-import numpy as np
-from commons.layers import *
 from commons.gradient import numerical_gradient
+from commons.layers import *
 from collections import OrderedDict
+import numpy as np
 
 
 class TwoLayerNet:
     def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
-        # 가중치 초기화
+        # init weight
         self.params = {}
         self.params['W1'] = weight_init_std * \
             np.random.randn(input_size, hidden_size)
@@ -15,7 +15,7 @@ class TwoLayerNet:
             np.random.randn(hidden_size, output_size)
         self.params['b2'] = np.zeros(output_size)
 
-        # 계층 생성
+        # init layers
         self.layers = OrderedDict()
         self.layers['Affine1'] = Affine(self.params['W1'], self.params['b1'])
         self.layers['Relu1'] = Relu()
@@ -28,7 +28,7 @@ class TwoLayerNet:
             x = layer.forward(x)
         return x
 
-    # x : 입력 데이터, t : 정답 레이블
+    # x: input data, t: answer
     def loss(self, x, t):
         y = self.predict(x)
         return self.lastLayer.forward(y, t)
@@ -42,7 +42,7 @@ class TwoLayerNet:
 
         return np.sum(y == t) / float(x.shape[0])
 
-    # x : 입력 데이터, t : 정답 레이블
+    # x: input data, t: answer
     def numerical_gradient(self, x, t):
         def loss_W(W): return self.loss(x, t)
 
@@ -67,7 +67,7 @@ class TwoLayerNet:
         for layer in layers:
             dout = layer.backward(dout)
 
-        # 결과 저장
+        # save results
         grads = {}
         grads['W1'], grads['b1'] = self.layers['Affine1'].dW, self.layers['Affine1'].db
         grads['W2'], grads['b2'] = self.layers['Affine2'].dW, self.layers['Affine2'].db

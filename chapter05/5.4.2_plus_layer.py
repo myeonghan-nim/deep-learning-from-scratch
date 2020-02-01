@@ -1,4 +1,4 @@
-from commons.layer_naive import *
+from commons.layers_naive import *
 
 apple = 100
 apple_num = 2
@@ -18,19 +18,17 @@ orange_price = mul_orange_layer.forward(orange, orange_num)
 all_price = add_apple_orange_layer.forward(apple_price, orange_price)
 price = mul_tax_layer.forward(all_price, tax)
 
-print("price:", int(price))
+print('price:', int(price))
 
 # backward
 dprice = 1
 dall_price, dtax = mul_tax_layer.backward(dprice)
-dapple_price, dorange_price = add_apple_orange_layer.backward(
-    dall_price
-)
+dapple_price, dorange_price = add_apple_orange_layer.backward(dall_price)
 dorange, dorange_num = mul_orange_layer.backward(dorange_price)
 dapple, dapple_num = mul_apple_layer.backward(dapple_price)
 
-print("dApple:", dapple)
-print("dApple_num:", int(dapple_num))
-print("dOrange:", dorange)
-print("dOrange_num:", int(dorange_num))
-print("dTax:", dtax)
+print('dApple:', dapple)
+print('dApple_num:', int(dapple_num))
+print('dOrange:', dorange)
+print('dOrange_num:', int(dorange_num))
+print('dTax:', dtax)
