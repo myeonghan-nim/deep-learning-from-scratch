@@ -1,4 +1,3 @@
-# 0. load AND, NAND, OR
 import numpy as np
 
 
