@@ -1,38 +1,23 @@
-# 1. outer library, Numpy
 import numpy as np
 
-
-# 2. numpy list
+# numpy list
 x = np.array([1.0, 2.0, 3.0])
-print(x)
-print(type(x))
+print('numpy:', x, type(x))
 
-
-# 3. numpy list calculation
+# numpy calculation
 y = np.array([2.0, 4.0, 6.0])
-print(x + y)
-print(x - y)
-print(x * y)
-print(x / y)
+print('calculate:', x + y, x - y, x * y, x / y, 'bootstrap:', x / 2)
 
-print(x / 2)  # broadcast
-
-
-# 4. numpy Nth array
+# numpy nth array
 A = np.array([[1, 2], [3, 4]])
-print(A)
-print(A.shape)
-print(A.dtype)
+print(A, A.shape, A.dtype, 'info of A')
 
 B = np.array([[3, 0], [0, 6]])
-print(A + B)
-print(A * B)
+print(A + B, 'plus')
+print(A * B, 'multiple')
+print(A * 10, 'broadcast')
 
-print(A)
-print(A * 10)  # broadcast
-
-
-# 5. Broadcast
-# when using numpy array, if size of A mat and B mat is diff, numpy match size of mat with broadcast
+# broadcast
+# if size of mat A and B are diff, numpy match sizes with broadcast
 C = np.array([10, 20])
-print(A * C)
+print(A * C, 'broadcast')

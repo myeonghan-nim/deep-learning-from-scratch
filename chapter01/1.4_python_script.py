@@ -1,9 +1,4 @@
-# 1. print in python
-print('I am hungry!')
-
-
-# 2. OOP in python with class
-class Man:
+class Man:  # OOP, class
     def __init__(self, name):
         self.name = name
         print('Initilized!')
@@ -16,5 +11,6 @@ class Man:
 
 
 m = Man('Reny')
+
 m.hello()
 m.goodbye()

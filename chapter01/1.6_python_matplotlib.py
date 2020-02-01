@@ -1,35 +1,32 @@
-import numpy as np
-import matplotlib.pyplot as plt
-
 from matplotlib.image import imread
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-# 1. matplotlib single graph
+# matplotlib single graph
 x = np.arange(0, 6, 0.1)
-y = np.sin(x)  # sin
+y = np.sin(x)
 
 plt.plot(x, y)
 plt.show()
 
-
-# 2. matplotlib multi graph
+# matplotlib multi graph
 a = np.arange(0, 6, 0.1)
 b = np.sin(x)
 c = np.cos(x)
 
-plt.plot(a, b, label='sin')  # label makes plot label
-plt.plot(a, c, linestyle='--', label='cos')  # set line style
+plt.plot(a, b, label='sin')  # plot label
+plt.plot(a, c, linestyle='--', label='cos')  # line style
 
-plt.xlabel('number')  # name of x line
-plt.ylabel('result')  # name of y line
+plt.xlabel('number')  # name of x
+plt.ylabel('result')  # name of y
 plt.title('sin & cos')
 
 plt.legend()
 plt.show()
 
-
-# 3. image showing with matplotlib
-img = imread('../dataset/lena.png')  # load image
+# image showing with matplotlib
+img = imread('./README.assets/thumb-course-phthon-basic-1573569963444.jpg')
 plt.imshow(img)
 
 plt.show()
