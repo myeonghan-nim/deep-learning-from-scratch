@@ -1,23 +1,23 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from datasets.mnist import load_mnist
 from commons.multi_layer_net import MultiLayerNet
 from commons.optimizer import SGD
+from datasets.mnist import load_mnist
+import matplotlib.pyplot as plt
+import numpy as np
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
-# 오버피팅을 재현하기 위해 학습 데이터 수를 줄임
+# reduce datas for overfitting
 x_train = x_train[:300]
 t_train = t_train[:300]
 
-# weight decay（가중치 감쇠） 설정
-# weight_decay_lambda = 0  # weight decay를 사용하지 않을 경우(오버피팅 발생)
+# set weight decay
+# weight_decay_lambda = 0  # if unlock this line overfit is raise(from without weight decay)
 weight_decay_lambda = 0.1
 
 network = MultiLayerNet(
     input_size=784, hidden_size_list=[100, 100, 100, 100, 100, 100],
     output_size=10, weight_decay_lambda=weight_decay_lambda)
-optimizer = SGD(lr=0.01)  # 학습률이 0.01인 SGD로 매개변수 갱신
+optimizer = SGD(lr=0.01)
 
 max_epochs = 201
 train_size = x_train.shape[0]
@@ -54,7 +54,6 @@ for i in range(1000000000):
         if epoch_cnt >= max_epochs:
             break
 
-# 그래프 그리기
 markers = {'train': 'o', 'test': 's'}
 x = np.arange(max_epochs)
 

@@ -1,12 +1,12 @@
-from commons.optimizer import SGD, Adam
 from commons.multi_layer_net_extend import MultiLayerNetExtend
+from commons.optimizer import SGD, Adam
 from datasets.mnist import load_mnist
 import matplotlib.pyplot as plt
 import numpy as np
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
-# 학습 데이터를 줄임
+# reduce datas
 x_train = x_train[:1000]
 t_train = t_train[:1000]
 
@@ -58,7 +58,6 @@ def __train(weight_init_std):
     return train_acc_list, bn_train_acc_list
 
 
-# 그래프 그리기
 weight_scale_list = np.logspace(0, -4, num=16)
 x = np.arange(max_epochs)
 

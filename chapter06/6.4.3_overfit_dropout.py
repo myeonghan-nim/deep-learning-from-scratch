@@ -1,17 +1,17 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from datasets.mnist import load_mnist
 from commons.multi_layer_net_extend import MultiLayerNetExtend
 from commons.trainer import Trainer
+from datasets.mnist import load_mnist
+import matplotlib.pyplot as plt
+import numpy as np
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
-# 오버피팅을 재현하기 위해 학습 데이터 수를 줄임
+# reduce datas for overfitting
 x_train = x_train[:300]
 t_train = t_train[:300]
 
-# 드롭아웃 사용 유무와 비울 설정
-use_dropout = True  # 드롭아웃을 쓰지 않을 때는 False
+# set usage of dropout and ratio
+use_dropout = True  # if not use dropout, False
 dropout_ratio = 0.2
 
 network = MultiLayerNetExtend(
@@ -27,7 +27,6 @@ trainer.train()
 
 train_acc_list, test_acc_list = trainer.train_acc_list, trainer.test_acc_list
 
-# 그래프 그리기
 markers = {'train': 'o', 'test': 's'}
 x = np.arange(len(train_acc_list))
 plt.plot(x, train_acc_list, marker='o', label='train', markevery=10)

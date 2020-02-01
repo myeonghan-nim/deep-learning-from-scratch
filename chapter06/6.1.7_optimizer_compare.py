@@ -1,7 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from collections import OrderedDict
 from commons.optimizer import *
+from collections import OrderedDict
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def f(x, y):
@@ -46,11 +46,11 @@ for key in optimizers:
     X, Y = np.meshgrid(x, y)
     Z = f(X, Y)
 
-    # 외곽선 단순화
+    # simple outline
     mask = Z > 7
     Z[mask] = 0
 
-    # 그래프 그리기
+    # draw graph
     plt.subplot(2, 2, idx)
     idx += 1
     plt.plot(x_history, y_history, 'o-', color='red')

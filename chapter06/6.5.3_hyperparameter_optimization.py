@@ -1,17 +1,17 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from datasets.mnist import load_mnist
 from commons.multi_layer_net import MultiLayerNet
 from commons.util import shuffle_dataset
 from commons.trainer import Trainer
+from datasets.mnist import load_mnist
+import matplotlib.pyplot as plt
+import numpy as np
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
-# 결과를 빠르게 얻기 위해 훈련 데이터를 줄임
+# reduce datas for get result early
 x_train = x_train[:500]
 t_train = t_train[:500]
 
-# 20%를 검증 데이터로 분할
+# train_test_split
 validation_rate = 0.20
 validation_num = int(x_train.shape[0] * validation_rate)
 x_train, t_train = shuffle_dataset(x_train, t_train)
@@ -36,12 +36,12 @@ def __train(lr, weight_decay, epocs=50):
     return trainer.test_acc_list, trainer.train_acc_list
 
 
-# 하이퍼파라미터 무작위 탐색
+# random hyperparameters
 optimization_trial = 100
 results_val = {}
 results_train = {}
 for _ in range(optimization_trial):
-    # 탐색한 하이퍼파라미터의 범위 지정
+    # set range of searched hyperparameters
     weight_decay = 10 ** np.random.uniform(-8, -4)
     lr = 10 ** np.random.uniform(-6, -2)
 
@@ -55,7 +55,6 @@ for _ in range(optimization_trial):
     results_val[key] = val_acc_list
     results_train[key] = train_acc_list
 
-# 그래프 그리기
 print('=========== Hyper-Parameter Optimization Result ===========')
 graph_draw_num = 20
 col_num = 5

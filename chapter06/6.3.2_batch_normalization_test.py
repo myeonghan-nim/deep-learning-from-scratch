@@ -1,8 +1,7 @@
-import numpy as np
-from datasets.mnist import load_mnist
 from commons.multi_layer_net_extend import MultiLayerNetExtend
+from datasets.mnist import load_mnist
+import numpy as np
 
-# 데이터 읽기
 (x_train, t_train), (x_test, t_test) = load_mnist(
     normalize=True, one_hot_label=True
 )

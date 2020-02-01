@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def sigmoid(x):
@@ -14,18 +14,17 @@ def tanh(x):
     return np.tanh(x)
 
 
-input_data = np.random.randn(1000, 100)  # 1000개의 데이터
-node_num = 100  # 각 은닉층의 노드(뉴런) 수
-hidden_layer_size = 5  # 은닉층 5개
-activations = {}  # 활성화 결과 저장
+input_data = np.random.randn(1000, 100)  # 1000 datas
+node_num = 100  # neural number of each layer
+hidden_layer_size = 5  # 5 layers
+activations = {}  # save results
 
 x = input_data
-
 for i in range(hidden_layer_size):
     if i != 0:
         x = activations[i-1]
 
-    # 초깃값을 다양하게 바꿔가며 실험해보자！
+    # unlock init value which wants
     w = np.random.randn(node_num, node_num) * 1
     # w = np.random.randn(node_num, node_num) * 0.01
     # w = np.random.randn(node_num, node_num) * np.sqrt(1.0 / node_num)
@@ -33,14 +32,14 @@ for i in range(hidden_layer_size):
 
     a = np.dot(x, w)
 
-    # 활성화 함수도 바꿔가며 실험해보자！
+    # unlock activation function which wants
     z = sigmoid(a)
     # z = ReLU(a)
     # z = tanh(a)
 
     activations[i] = z
 
-# 히스토그램 그리기
+# draw histogram
 for i, a in activations.items():
     plt.subplot(1, len(activations), i+1)
     plt.title(str(i + 1) + '-layer')

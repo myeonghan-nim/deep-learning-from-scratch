@@ -1,18 +1,18 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from datasets.mnist import load_mnist
-from commons.util import smooth_curve
 from commons.multi_layer_net import MultiLayerNet
 from commons.optimizer import *
+from commons.util import smooth_curve
+from datasets.mnist import load_mnist
+import matplotlib.pyplot as plt
+import numpy as np
 
-# 0. MNIST 데이터 읽기
+# read MNIST datas
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True)
 
 train_size = x_train.shape[0]
 batch_size = 128
 max_iterations = 2000
 
-# 1. 실험용 설정
+# set for test
 optimizers = {}
 optimizers['SGD'] = SGD()
 optimizers['Momentum'] = Momentum()
@@ -30,7 +30,7 @@ for key in optimizers.keys():
     )
     train_loss[key] = []
 
-# 2. 훈련 시작
+# start learning
 for i in range(max_iterations):
     batch_mask = np.random.choice(train_size, batch_size)
     x_batch = x_train[batch_mask]
@@ -49,7 +49,7 @@ for i in range(max_iterations):
             loss = networks[key].loss(x_batch, t_batch)
             print(key + ':' + str(loss))
 
-# 3. 그래프 그리기
+# draw graph
 markers = {'SGD': 'o', 'Momentum': 'x', 'AdaGrad': 's', 'Adam': 'D'}
 x = np.arange(max_iterations)
 for key in optimizers.keys():
