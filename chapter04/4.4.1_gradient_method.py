@@ -1,6 +1,6 @@
-import numpy as np
-import matplotlib.pylab as plt
 from commons.gradient import _numerical_gradient_no_batch, numerical_gradient
+import matplotlib.pylab as plt
+import numpy as np
 
 
 def gradient_descent(f, init_x, lr=0.01, step_num=100):
