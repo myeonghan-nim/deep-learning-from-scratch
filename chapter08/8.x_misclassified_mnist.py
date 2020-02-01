@@ -6,13 +6,14 @@ import numpy as np
 (x_train, t_train), (x_test, t_test) = load_mnist(flatten=False)
 
 network = DeepConvNet()
-network.load_params('deep_convnet_params.pkl')
+network.load_params('./chapter08/deep_convnet_params.pkl')
 
 print('calculating test accuracy ... ')
 
-# sampled = 1000
-# x_test = x_test[:sampled]
-# t_test = t_test[:sampled]
+# reduce datas
+sampled = 1000
+x_test = x_test[:sampled]
+t_test = t_test[:sampled]
 
 classified_ids = []
 

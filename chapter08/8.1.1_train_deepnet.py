@@ -1,6 +1,6 @@
-from deep_convnet import DeepConvNet
 from datasets.mnist import load_mnist
 from commons.trainer import Trainer
+from deep_convnet import DeepConvNet
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -13,6 +13,6 @@ trainer = Trainer(network, x_train, t_train, x_test, t_test,
                   evaluate_sample_num_per_epoch=1000)
 trainer.train()
 
-# 매개변수fmf 보관합니다.
-network.save_params('deep_convnet_params.pkl')
+# save parameters
+network.save_params('./chapter08/deep_convnet_params.pkl')
 print('Saved Network Parameters!')

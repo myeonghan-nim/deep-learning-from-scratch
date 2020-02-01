@@ -6,12 +6,9 @@ import pickle
 
 class DeepConvNet:
     '''
-    정확도 99% 이상의 고정밀 합성곱 신경망입니다.
-
-    네트워크 구성은 아래와 같습니다.
-        conv - relu - conv- relu - pool -
-        conv - relu - conv- relu - pool -
-        conv - relu - conv- relu - pool -
+    high accurate DeepConvNet, accuaracy 99%
+    composition of network:
+        conv - relu - conv- relu - pool - (x3)
         affine - relu - dropout - affine - dropout - softmax
     '''
 
@@ -29,10 +26,10 @@ class DeepConvNet:
                  conv_param_6={'filter_num': 64,
                                'filter_size': 3, 'pad': 1, 'stride': 1},
                  hidden_size=50, output_size=10):
-        # 가중치를 초기화합니다만 각 층의 각 뉴런이 앞 층의 몇 개의 뉴런과 연결되는가 자동 계산되게 바꿔야 합니다.
+        # init bias with calculate linked previous layer neurals of each layers neurals
         pre_node_nums = np.array(
             [1 * 3 * 3, 16 * 3 * 3, 16 * 3 * 3, 32 * 3 * 3, 32 * 3 * 3, 64 * 3 * 3, 64 * 4 * 4, hidden_size])
-        # ReLU를 사용할 때 권장 초깃값(He)입니다.
+        # ReLU init value(He)
         wight_init_scales = np.sqrt(2.0 / pre_node_nums)
 
         self.params = {}
@@ -50,7 +47,7 @@ class DeepConvNet:
             np.random.randn(hidden_size, output_size)
         self.params['b8'] = np.zeros(output_size)
 
-        # 계층을 생성합니다.
+        # make layers
         self.layers = []
         self.layers.append(Convolution(self.params['W1'], self.params['b1'],
                                        conv_param_1['stride'], conv_param_1['pad']))
@@ -120,7 +117,7 @@ class DeepConvNet:
         for layer in tmp_layers:
             dout = layer.backward(dout)
 
-        # 결과를 저장합니다.
+        # save results
         grads = {}
         for i, layer_idx in enumerate((0, 2, 5, 7, 10, 12, 15, 18)):
             grads['W' + str(i + 1)] = self.layers[layer_idx].dW
