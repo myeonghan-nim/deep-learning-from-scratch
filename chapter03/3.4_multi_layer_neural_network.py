@@ -1,12 +1,11 @@
-# 1. 3rd layer neural network example
 import numpy as np
 
 
-def sigmoid(x):  # def sigmoid function
+def sigmoid(x):  # sigmoid function
     return 1 / (1 + np.exp(-x))
 
 
-def identity_function(x):  # def return function for print
+def identity_function(x):  # return function for print
     return x
 
 
@@ -41,7 +40,7 @@ Y = identity_function(A3)
 print(Y)
 
 
-# 2. summary multi layer neural network
+# summary multi layer neural network
 def init_network():
     network = {}
 
