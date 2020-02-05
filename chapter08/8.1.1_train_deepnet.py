@@ -13,6 +13,5 @@ trainer = Trainer(network, x_train, t_train, x_test, t_test,
                   evaluate_sample_num_per_epoch=1000)
 trainer.train()
 
-# save parameters
-network.save_params('./chapter08/deep_convnet_params.pkl')
+network.save_params('./chapter08/deep_convnet_params.pkl')  # save parameters
 print('Saved Network Parameters!')

@@ -7,6 +7,7 @@ import pickle
 class DeepConvNet:
     '''
     high accurate DeepConvNet, accuaracy 99%
+
     composition of network:
         conv - relu - conv- relu - pool - (x3)
         affine - relu - dropout - affine - dropout - softmax
@@ -29,8 +30,7 @@ class DeepConvNet:
         # init bias with calculate linked previous layer neurals of each layers neurals
         pre_node_nums = np.array(
             [1 * 3 * 3, 16 * 3 * 3, 16 * 3 * 3, 32 * 3 * 3, 32 * 3 * 3, 64 * 3 * 3, 64 * 4 * 4, hidden_size])
-        # ReLU init value(He)
-        wight_init_scales = np.sqrt(2.0 / pre_node_nums)
+        wight_init_scales = np.sqrt(2.0 / pre_node_nums)  # ReLU init value(He)
 
         self.params = {}
         pre_channel_num = input_dim[0]
@@ -47,8 +47,7 @@ class DeepConvNet:
             np.random.randn(hidden_size, output_size)
         self.params['b8'] = np.zeros(output_size)
 
-        # make layers
-        self.layers = []
+        self.layers = []  # create layers
         self.layers.append(Convolution(self.params['W1'], self.params['b1'],
                                        conv_param_1['stride'], conv_param_1['pad']))
         self.layers.append(Relu())
@@ -105,11 +104,9 @@ class DeepConvNet:
         return acc / x.shape[0]
 
     def gradient(self, x, t):
-        # forward
-        self.loss(x, t)
+        self.loss(x, t)  # forward
 
-        # backward
-        dout = 1
+        dout = 1  # backward
         dout = self.last_layer.backward(dout)
 
         tmp_layers = self.layers.copy()
@@ -117,8 +114,7 @@ class DeepConvNet:
         for layer in tmp_layers:
             dout = layer.backward(dout)
 
-        # save results
-        grads = {}
+        grads = {}  # save results
         for i, layer_idx in enumerate((0, 2, 5, 7, 10, 12, 15, 18)):
             grads['W' + str(i + 1)] = self.layers[layer_idx].dW
             grads['b' + str(i + 1)] = self.layers[layer_idx].db

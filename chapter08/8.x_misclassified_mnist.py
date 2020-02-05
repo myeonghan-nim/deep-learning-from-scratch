@@ -19,7 +19,6 @@ classified_ids = []
 
 acc = 0.0
 batch_size = 100
-
 for i in range(int(x_test.shape[0] / batch_size)):
     tx = x_test[i * batch_size:(i + 1) * batch_size]
     tt = t_test[i * batch_size:(i + 1) * batch_size]
