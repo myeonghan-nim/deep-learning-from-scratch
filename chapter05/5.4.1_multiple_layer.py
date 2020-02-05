@@ -7,14 +7,11 @@ tax = 1.1
 mul_apple_layer = MulLayer()
 mul_tax_layer = MulLayer()
 
-# forward
-apple_price = mul_apple_layer.forward(apple, apple_num)
+apple_price = mul_apple_layer.forward(apple, apple_num)  # forward
 price = mul_tax_layer.forward(apple_price, tax)
-
 print('price:', int(price))
 
-# backward
-dprice = 1
+dprice = 1  # backward
 dapple_price, dtax = mul_tax_layer.backward(dprice)
 dapple, dapple_num = mul_apple_layer.backward(dapple_price)
 

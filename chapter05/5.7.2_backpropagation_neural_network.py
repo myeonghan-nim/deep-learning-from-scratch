@@ -5,8 +5,7 @@ import numpy as np
 
 
 class TwoLayerNet:
-    def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
-        # init weight
+    def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):  # init weight
         self.params = {}
         self.params['W1'] = weight_init_std * \
             np.random.randn(input_size, hidden_size)
@@ -15,8 +14,7 @@ class TwoLayerNet:
             np.random.randn(hidden_size, output_size)
         self.params['b2'] = np.zeros(output_size)
 
-        # init layers
-        self.layers = OrderedDict()
+        self.layers = OrderedDict()  # init layers
         self.layers['Affine1'] = Affine(self.params['W1'], self.params['b1'])
         self.layers['Relu1'] = Relu()
         self.layers['Affine2'] = Affine(self.params['W2'], self.params['b2'])
@@ -28,8 +26,7 @@ class TwoLayerNet:
             x = layer.forward(x)
         return x
 
-    # x: input data, t: answer
-    def loss(self, x, t):
+    def loss(self, x, t):  # x: input data, t: answer
         y = self.predict(x)
         return self.lastLayer.forward(y, t)
 
@@ -42,8 +39,7 @@ class TwoLayerNet:
 
         return np.sum(y == t) / float(x.shape[0])
 
-    # x: input data, t: answer
-    def numerical_gradient(self, x, t):
+    def numerical_gradient(self, x, t):  # x: input data, t: answer
         def loss_W(W): return self.loss(x, t)
 
         grads = {}
@@ -55,11 +51,9 @@ class TwoLayerNet:
         return grads
 
     def gradient(self, x, t):
-        # forward
-        self.loss(x, t)
+        self.loss(x, t)  # forward
 
-        # backward
-        dout = 1
+        dout = 1  # backward
         dout = self.lastLayer.backward(dout)
 
         layers = list(self.layers.values())
@@ -67,8 +61,7 @@ class TwoLayerNet:
         for layer in layers:
             dout = layer.backward(dout)
 
-        # save results
-        grads = {}
+        grads = {}  # save results
         grads['W1'], grads['b1'] = self.layers['Affine1'].dW, self.layers['Affine1'].db
         grads['W2'], grads['b2'] = self.layers['Affine2'].dW, self.layers['Affine2'].db
 

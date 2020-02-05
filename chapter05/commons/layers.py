@@ -9,10 +9,8 @@ class Relu:
 
     def forward(self, x):
         self.mask = (x <= 0)
-
         out = x.copy()
         out[self.mask] = 0
-
         return out
 
     def backward(self, dout):
@@ -38,21 +36,17 @@ class Affine:
     def __init__(self, W, b):
         self.W = W
         self.b = b
-
         self.x = None
         self.original_x_shape = None
 
-        # 가중치와 편향 매개변수의 미분입니다.
+        # differential of weight and weight bias
         self.dW = None
         self.db = None
 
-    def forward(self, x):
-        # 텐서에 대응합니다.
+    def forward(self, x):  # response tensor
         self.original_x_shape = x.shape
-
         x = x.reshape(x.shape[0], -1)
         self.x = x
-
         return np.dot(self.x, self.W) + self.b
 
     def backward(self, dout):
@@ -61,16 +55,16 @@ class Affine:
         self.dW = np.dot(self.x.T, dout)
         self.db = np.sum(dout, axis=0)
 
-        # 입력 데이터 모양을 변경합니다.(텐서 대응)
+        # change shape of input(response tensor)
         dx = dx.reshape(*self.original_x_shape)
         return dx
 
 
 class SoftmaxWithLoss:
     def __init__(self):
-        self.loss = None  # 손실함수
-        self.y = None  # Softmax 출력
-        self.t = None  # 정답 레이블(원-핫 인코딩 형태)
+        self.loss = None  # loss function
+        self.y = None  # softmax return value
+        self.t = None  # answer label(one-hot encoded)
 
     def forward(self, x, t):
         self.t = t
@@ -80,7 +74,7 @@ class SoftmaxWithLoss:
     def backward(self, dout=1):
         batch_size = self.t.shape[0]
 
-        if self.t.size == self.y.size:  # 정답 레이블이 원-핫 인코딩 형태일 때
+        if self.t.size == self.y.size:  # if answer was one-hot encoded
             dx = (self.y - self.t) / batch_size
         else:
             dx = self.y.copy()
@@ -90,11 +84,7 @@ class SoftmaxWithLoss:
         return dx
 
 
-class Dropout:
-    '''
-    http://arxiv.org/abs/1207.0580
-    '''
-
+class Dropout:  # http://arxiv.org/abs/1207.0580
     def __init__(self, dropout_ratio=0.5):
         self.dropout_ratio = dropout_ratio
         self.mask = None
@@ -110,22 +100,18 @@ class Dropout:
         return dout * self.mask
 
 
-class BatchNormalization:
-    '''
-    http://arxiv.org/abs/1502.03167
-    '''
-
+class BatchNormalization:  # http://arxiv.org/abs/1502.03167
     def __init__(self, gamma, beta, momentum=0.9, running_mean=None, running_var=None):
         self.gamma = gamma
         self.beta = beta
         self.momentum = momentum
-        self.input_shape = None  # 합성곱 계층은 4차원, 완전연결 계층은 2차원입니다.
+        self.input_shape = None  # muliple is 4d, affine is 2d
 
-        # 시험할 때 사용할 평균과 분산
+        # average and disperse for test
         self.running_mean = running_mean
         self.running_var = running_var
 
-        # backward에 사용할 중간 데이터
+        # mid data for backward
         self.batch_size = None
         self.xc = None
         self.std = None
@@ -146,7 +132,6 @@ class BatchNormalization:
     def __forward(self, x, train_flg):
         if self.running_mean is None:
             N, D = x.shape
-
             self.running_mean = np.zeros(D)
             self.running_var = np.zeros(D)
 
@@ -186,7 +171,6 @@ class BatchNormalization:
 
         dxn = self.gamma * dout
         dxc = dxn / self.std
-
         dstd = -np.sum((dxn * self.xc) / (self.std * self.std), axis=0)
         dvar = 0.5 * dstd / self.std
 
@@ -208,12 +192,12 @@ class Convolution:
         self.stride = stride
         self.pad = pad
 
-        # 중간 데이터backward용）
+        # mid data for backward
         self.x = None
         self.col = None
         self.col_W = None
 
-        # 가중치와 편향 매개변수의 기울기
+        # grads of weight and weight bias
         self.dW = None
         self.db = None
 
@@ -245,7 +229,6 @@ class Convolution:
 
         dcol = np.dot(dout, self.col_W.T)
         dx = col2im(dcol, self.x.shape, FH, FW, self.stride, self.pad)
-
         return dx
 
 
@@ -255,7 +238,6 @@ class Pooling:
         self.pool_w = pool_w
         self.stride = stride
         self.pad = pad
-
         self.x = None
         self.arg_max = None
 
@@ -278,7 +260,6 @@ class Pooling:
 
     def backward(self, dout):
         dout = dout.transpose(0, 2, 3, 1)
-
         pool_size = self.pool_h * self.pool_w
 
         dmax = np.zeros((dout.size, pool_size))
@@ -287,8 +268,6 @@ class Pooling:
         dmax = dmax.reshape(dout.shape + (pool_size,))
 
         dcol = dmax.reshape(dmax.shape[0] * dmax.shape[1] * dmax.shape[2], -1)
-
         dx = col2im(dcol, self.x.shape, self.pool_h,
                     self.pool_w, self.stride, self.pad)
-
         return dx

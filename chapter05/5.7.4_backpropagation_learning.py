@@ -3,8 +3,7 @@ from datasets.mnist import load_mnist
 import numpy as np
 
 (x_train, t_train), (x_test, t_test) = load_mnist(
-    normalize=True, one_hot_label=True
-)
+    normalize=True, one_hot_label=True)
 
 network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
@@ -24,11 +23,10 @@ for i in range(iters_num):
     x_batch = x_train[batch_mask]
     t_batch = t_train[batch_mask]
 
-    # calculate gradients
-    grad = network.gradient(x_batch, t_batch)  # backpropagation
+    # calculate gradients with backpropagation
+    grad = network.gradient(x_batch, t_batch)
 
-    # renewal
-    for key in ('W1', 'b1', 'W2', 'b2'):
+    for key in ('W1', 'b1', 'W2', 'b2'):  # renewal
         network.params[key] -= learning_rate * grad[key]
 
     loss = network.loss(x_batch, t_batch)
