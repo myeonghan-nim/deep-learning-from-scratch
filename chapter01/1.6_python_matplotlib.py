@@ -2,7 +2,6 @@ from matplotlib.image import imread
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 # matplotlib single graph
 x = np.arange(0, 6, 0.1)
 y = np.sin(x)

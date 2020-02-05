@@ -33,17 +33,20 @@ a, b = True, False
 print('booleans:', type(a))
 print('compares:', a and b, a or b, not b)
 
-if a:  # if
+# if
+if a:
     print('check: a is True.')
     if not b:
         print('check: b is False.')
 
-for i in [1, 2, 3, 4, 5]:  # for
+# for
+for i in [1, 2, 3, 4, 5]:
     print(i, end=' ')
 print()
 
 
-def greeting():  # function
+# function
+def greeting():
     print('Hello, python!')
 
 

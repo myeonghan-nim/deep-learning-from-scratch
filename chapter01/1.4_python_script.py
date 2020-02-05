@@ -1,4 +1,5 @@
-class Man:  # OOP, class
+# class
+class Man:
     def __init__(self, name):
         self.name = name
         print('Initilized!')
@@ -11,6 +12,5 @@ class Man:  # OOP, class
 
 
 m = Man('Reny')
-
 m.hello()
 m.goodbye()

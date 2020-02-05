@@ -17,7 +17,6 @@ print(A + B, 'plus')
 print(A * B, 'multiple')
 print(A * 10, 'broadcast')
 
-# broadcast
-# if size of mat A and B are diff, numpy match sizes with broadcast
+# broadcast: if size of mat A and B are diff, numpy match sizes with broadcast
 C = np.array([10, 20])
 print(A * C, 'broadcast')
