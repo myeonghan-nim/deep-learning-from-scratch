@@ -1,7 +1,8 @@
 import numpy as np
 
 
-def AND(x1, x2):  # AND perceptron
+# AND perceptron
+def AND(x1, x2):
     w1, w2, theta = 0.5, 0.5, 0.7
 
     y = x1 * w1 + x2 * w2
@@ -16,8 +17,7 @@ for i, j in [(0, 0), (1, 0), (0, 1), (1, 1)]:
     print(AND(i, j), end=' ')
 print()
 
-# advanced perceptron with weight bias
-x = np.array([0, 1])
+x = np.array([0, 1])  # advanced perceptron with weight bias
 w = np.array([0.5, 0.5])
 b = -0.7  # theta
 
@@ -25,7 +25,8 @@ temp = x * w
 print('bias calculation:', np.sum(temp), np.sum(temp) + b)
 
 
-def AND(x1, x2):  # implement weight bias
+# implement weight bias AND perceptron
+def AND(x1, x2):
     x = np.array([x1, x2])
     w = np.array([0.5, 0.5])
     b = -0.7
