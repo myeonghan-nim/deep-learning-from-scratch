@@ -15,7 +15,7 @@ label = t_train[0]
 print(label)
 
 print(img.shape)
-img = img.reshape(28, 28)  # img file is 1st dimension array, so reshape it
+img = img.reshape(28, 28)  # reshape 1d mat images
 print(img.shape)
 
 img_show(img)

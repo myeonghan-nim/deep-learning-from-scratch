@@ -2,8 +2,9 @@ import matplotlib.pylab as plt
 import numpy as np
 
 
-def step_function(x):  # dtype changes True/False to 1/0
-    return np.array(x > 0, dtype=np.int)
+# step function
+def step_function(x):
+    return np.array(x > 0, dtype=np.int)  # dtype changes True/False to 1/0
 
 
 # check atoms in X is over 0

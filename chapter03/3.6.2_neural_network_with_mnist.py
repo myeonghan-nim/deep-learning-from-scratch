@@ -1,17 +1,17 @@
 from commons.functions import sigmoid, softmax
 from datasets.mnist import load_mnist
-import pickle
 import numpy as np
+import pickle
 
 
-def get_data():  # def function for load mnist datasets with normalization
+def get_data():  # load mnist datasets with normalization
     (x_train, t_train), (x_test, t_test) = load_mnist(
         normalize=True, flatten=True, one_hot_label=False
     )
     return x_test, t_test
 
 
-def init_network():  # def function for read wieght parameters
+def init_network():  # read wieght parameters
     with open('chapter03/3.x_weight.pkl', 'rb') as f:
         network = pickle.load(f)
     return network
@@ -36,7 +36,7 @@ network = init_network()
 accuracy_cnt = 0
 for i in range(len(x)):
     y = predict(network, x[i])
-    p = np.argmax(y)   # return index of max probability
+    p = np.argmax(y)   # index of max probability
     if p == t[i]:
         accuracy_cnt += 1
 

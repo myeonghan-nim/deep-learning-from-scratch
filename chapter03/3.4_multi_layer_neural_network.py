@@ -1,20 +1,19 @@
 import numpy as np
 
 
-def sigmoid(x):  # sigmoid function
+# sigmoid function
+def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
-def identity_function(x):  # return function for print
+# print function
+def identity_function(x):
     return x
 
 
 # 1st -> 2nd layer
 X = np.array([1.0, 0.5])
-W1 = np.array([
-    [0.1, 0.3, 0.5],
-    [0.2, 0.4, 0.6]
-])
+W1 = np.array([[0.1, 0.3, 0.5], [0.2, 0.4, 0.6]])
 B1 = np.array([0.1, 0.2, 0.3])
 
 A1 = np.dot(X, W1) + B1
@@ -22,9 +21,7 @@ Z1 = sigmoid(A1)
 print(Z1)
 
 # 2nd -> 3rd layer
-W2 = np.array([
-    [0.1, 0.4], [0.2, 0.5], [0.3, 0.6]
-])
+W2 = np.array([[0.1, 0.4], [0.2, 0.5], [0.3, 0.6]])
 B2 = np.array([0.1, 0.2])
 
 A2 = np.dot(Z1, W2) + B2
@@ -40,7 +37,7 @@ Y = identity_function(A3)
 print(Y)
 
 
-# summary multi layer neural network
+# multi layer neural network
 def init_network():
     network = {}
 

@@ -1,13 +1,12 @@
 from commons.functions import sigmoid, softmax
 from datasets.mnist import load_mnist
-import pickle
 import numpy as np
+import pickle
 
 
 def get_data():
     (x_train, t_train), (x_test, t_test) = load_mnist(
-        normalize=True, flatten=True, one_hot_label=False
-    )
+        normalize=True, flatten=True, one_hot_label=False)
     return x_test, t_test
 
 
