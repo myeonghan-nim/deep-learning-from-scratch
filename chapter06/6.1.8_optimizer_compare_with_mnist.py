@@ -23,15 +23,11 @@ optimizers['Adam'] = Adam()
 networks = {}
 train_loss = {}
 for key in optimizers.keys():
-    networks[key] = MultiLayerNet(
-        input_size=784,
-        hidden_size_list=[100, 100, 100, 100],
-        output_size=10
-    )
+    networks[key] = MultiLayerNet(input_size=784, hidden_size_list=[100, 100, 100, 100],
+                                  output_size=10)
     train_loss[key] = []
 
-# start learning
-for i in range(max_iterations):
+for i in range(max_iterations):  # start learning
     batch_mask = np.random.choice(train_size, batch_size)
     x_batch = x_train[batch_mask]
     t_batch = t_train[batch_mask]
@@ -53,13 +49,8 @@ for i in range(max_iterations):
 markers = {'SGD': 'o', 'Momentum': 'x', 'AdaGrad': 's', 'Adam': 'D'}
 x = np.arange(max_iterations)
 for key in optimizers.keys():
-    plt.plot(
-        x,
-        smooth_curve(train_loss[key]),
-        marker=markers[key],
-        markevery=100,
-        label=key
-    )
+    plt.plot(x, smooth_curve(train_loss[key]),
+             marker=markers[key], markevery=100, label=key)
 
 plt.xlabel('iterations')
 plt.ylabel('loss')

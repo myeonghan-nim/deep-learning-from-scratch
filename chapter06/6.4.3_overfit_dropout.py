@@ -14,15 +14,11 @@ t_train = t_train[:300]
 use_dropout = True  # if not use dropout, False
 dropout_ratio = 0.2
 
-network = MultiLayerNetExtend(
-    input_size=784, hidden_size_list=[100, 100, 100, 100, 100, 100],
-    output_size=10, use_dropout=use_dropout, dropout_ration=dropout_ratio
-)
-trainer = Trainer(
-    network, x_train, t_train, x_test, t_test,
-    epochs=301, mini_batch_size=100,
-    optimizer='sgd', optimizer_param={'lr': 0.01}, verbose=True
-)
+network = MultiLayerNetExtend(input_size=784, hidden_size_list=[100, 100, 100, 100, 100, 100],
+                              output_size=10, use_dropout=use_dropout, dropout_ration=dropout_ratio)
+trainer = Trainer(network, x_train, t_train, x_test, t_test,
+                  epochs=301, mini_batch_size=100,
+                  optimizer='sgd', optimizer_param={'lr': 0.01}, verbose=True)
 trainer.train()
 
 train_acc_list, test_acc_list = trainer.train_acc_list, trainer.test_acc_list

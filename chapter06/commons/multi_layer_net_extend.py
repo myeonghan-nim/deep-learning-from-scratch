@@ -6,22 +6,22 @@ import numpy as np
 
 class MultiLayerNetExtend:
     '''
-    완전 연결 다층 신경망(확장판)
-    가중치 감소, 드롭아웃, 배치 정규화 구현
+    full joint multi layer extended
+    with weight reduction, dropout, batch normalization
 
     Parameters
     ----------
-    input_size: 입력 크기（MNIST의 경우엔 784）
-    hidden_size_list: 각 은닉층의 뉴런 수를 담은 리스트（e.g. [100, 100, 100]）
-    output_size: 출력 크기（MNIST의 경우엔 10）
-    activation: 활성화 함수 - 'relu' 혹은 'sigmoid'
-    weight_init_std: 가중치의 표준편차 지정（e.g. 0.01）
-        'relu'나 'he'로 지정하면 'He 초깃값'으로 설정
-        'sigmoid'나 'xavier'로 지정하면 'Xavier 초깃값'으로 설정
-    weight_decay_lambda: 가중치 감소(L2 법칙)의 세기
-    use_dropout: 드롭아웃 사용 여부
-    dropout_ration: 드롭아웃 비율
-    use_batchNorm: 배치 정규화 사용 여부
+    input_size: input size(MNIST is 784)
+    hidden_size_list: number of neurons list of eaxh layer
+    output_size: output size(MNIST is 10)
+    activation: activation function(relu or sigmoid)
+    weight_init_std: standard deviation of weight
+        relu or he: He init value
+        sigmoid or'xavier: Xavier init value
+    weight_decay_lambda: power of weight reduction
+    use_dropout: use dropout or not
+    dropout_ration: dropout ratio
+    use_batchNorm: use batch normalization or not
     '''
 
     def __init__(self, input_size, hidden_size_list, output_size,
@@ -36,22 +36,21 @@ class MultiLayerNetExtend:
         self.use_batchnorm = use_batchnorm
         self.params = {}
 
-        # 가중치 초기화
-        self.__init_weight(weight_init_std)
+        self.__init_weight(weight_init_std)  # init weight
 
-        # 계층 생성
-        activation_layer = {'sigmoid': Sigmoid, 'relu': Relu}
+        activation_layer = {'sigmoid': Sigmoid, 'relu': Relu}  # create layer
+
         self.layers = OrderedDict()
         for idx in range(1, self.hidden_layer_num + 1):
-            self.layers['Affine' + str(idx)] = Affine(self.params['W' + str(idx)],
-                                                      self.params['b' + str(idx)])
+            self.layers['Affine' + str(idx)
+                        ] = Affine(self.params['W' + str(idx)], self.params['b' + str(idx)])
             if self.use_batchnorm:
-                self.params['gamma' + str(idx)] = \
-                    np.ones(hidden_size_list[idx - 1])
-                self.params['beta' + str(idx)] = \
-                    np.zeros(hidden_size_list[idx - 1])
-                self.layers['BatchNorm' + str(idx)] = BatchNormalization(self.params['gamma' + str(idx)],
-                                                                         self.params['beta' + str(idx)])
+                self.params['gamma' + str(idx)
+                            ] = np.ones(hidden_size_list[idx - 1])
+                self.params['beta' + str(idx)
+                            ] = np.zeros(hidden_size_list[idx - 1])
+                self.layers['BatchNorm' + str(idx)
+                            ] = BatchNormalization(self.params['gamma' + str(idx)], self.params['beta' + str(idx)])
 
             self.layers['Activation_function' + str(idx)
                         ] = activation_layer[activation]()
@@ -60,21 +59,22 @@ class MultiLayerNetExtend:
                 self.layers['Dropout' + str(idx)] = Dropout(dropout_ration)
 
         idx = self.hidden_layer_num + 1
-        self.layers['Affine' + str(idx)] = Affine(self.params['W' + str(idx)],
-                                                  self.params['b' + str(idx)])
+        self.layers['Affine' + str(idx)
+                    ] = Affine(self.params['W' + str(idx)], self.params['b' + str(idx)])
 
         self.last_layer = SoftmaxWithLoss()
 
     def __init_weight(self, weight_init_std):
         '''
-        가중치 초기화
+        init weight
 
         Parameters
         ----------
-        weight_init_std: 가중치의 표준편차 지정（e.g. 0.01）
-            'relu'나 'he'로 지정하면 'He 초깃값'으로 설정
-            'sigmoid'나 'xavier'로 지정하면 'Xavier 초깃값'으로 설정
+        weight_init_std: standard deviation of weight
+            relu or he: He init value
+            sigmoid or'xavier: Xavier init value
         '''
+
         all_size_list = \
             [self.input_size] + self.hidden_size_list + [self.output_size]
 
@@ -99,13 +99,14 @@ class MultiLayerNetExtend:
 
     def loss(self, x, t, train_flg=False):
         '''
-        손실 함수를 구합니다.
+        calculate loss function
 
         Parameters
         ----------
-        x: 입력 데이터
-        t: 정답 레이블 
+        x: input data
+        t: answer label
         '''
+
         y = self.predict(x, train_flg)
 
         weight_decay = 0
@@ -127,18 +128,18 @@ class MultiLayerNetExtend:
 
     def numerical_gradient(self, X, T):
         '''
-        기울기를 구합니다.(수치 미분)
+        calculate grad with numerical differential
 
         Parameters
         ----------
-        x: 입력 데이터
-        t: 정답 레이블
+        x: input data
+        t: answer label
 
         Returns
         -------
-        각 층의 기울기를 담은 사전(dictionary) 변수
-            grads['W1']、grads['W2']、... 각 층의 가중치
-            grads['b1']、grads['b2']、... 각 층의 편향
+        grads of each layers dict
+            grads['W1']、grads['W2']、...: weight of each layer
+            grads['b1']、grads['b2']、...: bias of each layer
         '''
         def loss_W(W):
             return self.loss(X, T, train_flg=True)
@@ -159,11 +160,9 @@ class MultiLayerNetExtend:
         return grads
 
     def gradient(self, x, t):
-        # forward
-        self.loss(x, t, train_flg=True)
+        self.loss(x, t, train_flg=True)  # forward
 
-        # backward
-        dout = 1
+        dout = 1  # backward
         dout = self.last_layer.backward(dout)
 
         layers = list(self.layers.values())
@@ -171,8 +170,7 @@ class MultiLayerNetExtend:
         for layer in layers:
             dout = layer.backward(dout)
 
-        # 결과 저장
-        grads = {}
+        grads = {}  # save resuult
         for idx in range(1, self.hidden_layer_num+2):
             grads['W' + str(idx)] = self.layers['Affine' + str(idx)].dW + \
                 self.weight_decay_lambda * self.params['W' + str(idx)]

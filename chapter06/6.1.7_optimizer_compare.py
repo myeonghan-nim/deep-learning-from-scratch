@@ -26,7 +26,6 @@ optimizers['AdaGrad'] = AdaGrad(lr=1.5)
 optimizers['Adam'] = Adam(lr=0.3)
 
 idx = 1
-
 for key in optimizers:
     optimizer = optimizers[key]
     x_history = []

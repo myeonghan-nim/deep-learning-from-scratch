@@ -14,9 +14,9 @@ def tanh(x):
     return np.tanh(x)
 
 
-input_data = np.random.randn(1000, 100)  # 1000 datas
+input_data = np.random.randn(1000, 100)
 node_num = 100  # neural number of each layer
-hidden_layer_size = 5  # 5 layers
+hidden_layer_size = 5
 activations = {}  # save results
 
 x = input_data

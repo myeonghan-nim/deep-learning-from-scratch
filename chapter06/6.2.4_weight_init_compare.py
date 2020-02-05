@@ -19,14 +19,11 @@ optimizer = SGD(lr=0.01)
 networks = {}
 train_loss = {}
 for key, weight_type in weight_init_types.items():
-    networks[key] = MultiLayerNet(
-        input_size=784, hidden_size_list=[100, 100, 100, 100],
-        output_size=10, weight_init_std=weight_type
-    )
+    networks[key] = MultiLayerNet(input_size=784, hidden_size_list=[100, 100, 100, 100],
+                                  output_size=10, weight_init_std=weight_type)
     train_loss[key] = []
 
-# start learning
-for i in range(max_iterations):
+for i in range(max_iterations):  # start learning
     batch_mask = np.random.choice(train_size, batch_size)
     x_batch = x_train[batch_mask]
     t_batch = t_train[batch_mask]
@@ -44,16 +41,13 @@ for i in range(max_iterations):
             loss = networks[key].loss(x_batch, t_batch)
             print(key + ':' + str(loss))
 
-# draw graph
-markers = {'std=0.01': 'o', 'Xavier': 's', 'He': 'D'}
+
+markers = {'std=0.01': 'o', 'Xavier': 's', 'He': 'D'}  # draw graph
 
 x = np.arange(max_iterations)
 for key in weight_init_types.keys():
-    plt.plot(
-        x, smooth_curve(train_loss[key]),
-        marker=markers[key],
-        markevery=100, label=key
-    )
+    plt.plot(x, smooth_curve(train_loss[key]),
+             marker=markers[key], markevery=100, label=key)
 
 plt.xlabel('iterations')
 plt.ylabel('loss')

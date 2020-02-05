@@ -6,18 +6,18 @@ import numpy as np
 
 class MultiLayerNet:
     '''
-    완전연결 다층 신경망
+    full joint multi layer extended
 
     Parameters
     ----------
-    input_size: 입력 크기（MNIST의 경우엔 784）
-    hidden_size_list: 각 은닉층의 뉴런 수를 담은 리스트e.g. [100, 100, 100]）
-    output_size: 출력 크기（MNIST의 경우엔 10）
-    activation: 활성화 함수 - 'relu' 혹은 'sigmoid'
-    weight_init_std: 가중치의 표준편차 지정e.g. 0.01）
-        'relu'나 'he'로 지정하면 'He 초깃값'으로 설정
-        'sigmoid'나 'xavier'로 지정하면 'Xavier 초깃값'으로 설정
-    weight_decay_lambda: 가중치 감소(L2 법칙)의 세기
+    input_size: input size(MNIST is 784)
+    hidden_size_list: number of neurons list of eaxh layer
+    output_size: output size(MNIST is 10)
+    activation: activation function(relu or sigmoid)
+    weight_init_std: standard deviation of weight
+        relu or he: He init value
+        sigmoid or'xavier: Xavier init value
+    weight_decay_lambda: power of weight reduction
     '''
 
     def __init__(self, input_size, hidden_size_list, output_size,
@@ -29,68 +29,60 @@ class MultiLayerNet:
         self.weight_decay_lambda = weight_decay_lambda
         self.params = {}
 
-        # 가중치 초기화
-        self.__init_weight(weight_init_std)
+        self.__init_weight(weight_init_std)  # init weight
 
-        # 계층 생성
-        activation_layer = {'sigmoid': Sigmoid, 'relu': Relu}
+        activation_layer = {'sigmoid': Sigmoid, 'relu': Relu}  # create layer
         self.layers = OrderedDict()
         for idx in range(1, self.hidden_layer_num + 1):
-            self.layers['Affine' + str(idx)] = Affine(self.params['W' + str(idx)],
-                                                      self.params['b' + str(idx)])
-            self.layers['Activation_function' + str(idx)] = \
-                activation_layer[activation]()
+            self.layers['Affine' + str(idx)
+                        ] = Affine(self.params['W' + str(idx)], self.params['b' + str(idx)])
+            self.layers['Activation_function' + str(idx)
+                        ] = activation_layer[activation]()
 
         idx = self.hidden_layer_num + 1
-        self.layers['Affine' + str(idx)] = Affine(self.params['W' + str(idx)],
-                                                  self.params['b' + str(idx)])
+        self.layers['Affine' + str(idx)
+                    ] = Affine(self.params['W' + str(idx)], self.params['b' + str(idx)])
 
         self.last_layer = SoftmaxWithLoss()
 
     def __init_weight(self, weight_init_std):
         '''
-        가중치 초기화
+        init weight
 
         Parameters
         ----------
-        weight_init_std: 가중치의 표준편차 지정（e.g. 0.01）
-            'relu'나 'he'로 지정하면 'He 초깃값'으로 설정
-            'sigmoid'나 'xavier'로 지정하면 'Xavier 초깃값'으로 설정
+        weight_init_std: standard deviation of weight
+            relu or he: He init value
+            sigmoid or'xavier: Xavier init value
         '''
+
         all_size_list = \
             [self.input_size] + self.hidden_size_list + [self.output_size]
 
         for idx in range(1, len(all_size_list)):
             scale = weight_init_std
             if str(weight_init_std).lower() in ('relu', 'he'):
-                # ReLU를 사용할 때의 권장 초깃값
                 scale = np.sqrt(2.0 / all_size_list[idx - 1])
             elif str(weight_init_std).lower() in ('sigmoid', 'xavier'):
-                # sigmoid를 사용할 때의 권장 초깃값
                 scale = np.sqrt(1.0 / all_size_list[idx - 1])
 
-            self.params['W' + str(idx)] = scale * np.random.randn(all_size_list[idx - 1],
-                                                                  all_size_list[idx])
+            self.params['W' + str(idx)] = scale * \
+                np.random.randn(all_size_list[idx - 1], all_size_list[idx])
             self.params['b' + str(idx)] = np.zeros(all_size_list[idx])
 
     def predict(self, x):
         for layer in self.layers.values():
             x = layer.forward(x)
-
         return x
 
     def loss(self, x, t):
         '''
-        손실 함수를 구합니다.
+        calculate loss function
 
         Parameters
         ----------
-        x: 입력 데이터
-        t: 정답 레이블 
-
-        Returns
-        -------
-        손실 함수의 값
+        x: input data
+        t: answer label
         '''
         y = self.predict(x)
 
@@ -113,18 +105,18 @@ class MultiLayerNet:
 
     def numerical_gradient(self, x, t):
         '''
-        기울기를 구합니다.(수치 미분)
+        calculate grad with numerical differential
 
         Parameters
         ----------
-        x: 입력 데이터
-        t: 정답 레이블
+        x: input data
+        t: answer label
 
         Returns
         -------
-        각 층의 기울기를 담은 딕셔너리(dictionary) 변수
-            grads['W1']、grads['W2']、... 각 층의 가중치
-            grads['b1']、grads['b2']、... 각 층의 편향
+        grads of each layers dict
+            grads['W1']、grads['W2']、...: weight of each layer
+            grads['b1']、grads['b2']、...: bias of each layer
         '''
         def loss_W(W):
             return self.loss(x, t)
@@ -140,24 +132,23 @@ class MultiLayerNet:
 
     def gradient(self, x, t):
         '''
-        기울기를 구합니다.(오차역전파법)
+        calculate grad with backpropagation
 
         Parameters
         ----------
-        x: 입력 데이터
-        t: 정답 레이블
+        x: input data
+        t: answer label
 
         Returns
         -------
-        각 층의 기울기를 담은 딕셔너리(dictionary) 변수
-            grads['W1']、grads['W2']、... 각 층의 가중치
-            grads['b1']、grads['b2']、... 각 층의 편향
+        grads of each layers dict
+            grads['W1']、grads['W2']、...: weight of each layer
+            grads['b1']、grads['b2']、...: bias of each layer
         '''
-        # forward
-        self.loss(x, t)
 
-        # backward
-        dout = 1
+        self.loss(x, t)  # forward
+
+        dout = 1  # backward
         dout = self.last_layer.backward(dout)
 
         layers = list(self.layers.values())
@@ -165,8 +156,7 @@ class MultiLayerNet:
         for layer in layers:
             dout = layer.backward(dout)
 
-        # 결과 저장
-        grads = {}
+        grads = {}  # save result
         for idx in range(1, self.hidden_layer_num + 2):
             grads['W' + str(idx)] = self.layers['Affine' + str(idx)].dW + \
                 self.weight_decay_lambda * self.layers['Affine' + str(idx)].W

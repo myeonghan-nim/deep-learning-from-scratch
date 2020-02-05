@@ -3,12 +3,10 @@ from datasets.mnist import load_mnist
 import numpy as np
 
 (x_train, t_train), (x_test, t_test) = load_mnist(
-    normalize=True, one_hot_label=True
-)
+    normalize=True, one_hot_label=True)
 
-network = MultiLayerNetExtend(
-    input_size=784, hidden_size_list=[100, 100], output_size=10, use_batchnorm=True
-)
+network = MultiLayerNetExtend(input_size=784, hidden_size_list=[100, 100],
+                              output_size=10, use_batchnorm=True)
 
 x_batch = x_train[:1]
 t_batch = t_train[:1]

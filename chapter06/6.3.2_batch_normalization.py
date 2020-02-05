@@ -17,14 +17,10 @@ learning_rate = 0.01
 
 
 def __train(weight_init_std):
-    bn_network = MultiLayerNetExtend(
-        input_size=784, hidden_size_list=[100, 100, 100, 100, 100], output_size=10,
-        weight_init_std=weight_init_std, use_batchnorm=True
-    )
-    network = MultiLayerNetExtend(
-        input_size=784, hidden_size_list=[100, 100, 100, 100, 100], output_size=10,
-        weight_init_std=weight_init_std
-    )
+    bn_network = MultiLayerNetExtend(input_size=784, hidden_size_list=[100, 100, 100, 100, 100],
+                                     output_size=10, weight_init_std=weight_init_std, use_batchnorm=True)
+    network = MultiLayerNetExtend(input_size=784, hidden_size_list=[100, 100, 100, 100, 100],
+                                  output_size=10, weight_init_std=weight_init_std)
     optimizer = SGD(lr=learning_rate)
 
     train_acc_list = []
@@ -48,8 +44,9 @@ def __train(weight_init_std):
             train_acc_list.append(train_acc)
             bn_train_acc_list.append(bn_train_acc)
 
-            print('epoch:' + str(epoch_cnt) + ' | ' +
-                  str(train_acc) + ' - ' + str(bn_train_acc))
+            print('epoch:' + str(epoch_cnt) +
+                  ' | ' + str(train_acc) +
+                  ' - ' + str(bn_train_acc))
 
             epoch_cnt += 1
             if epoch_cnt >= max_epochs:
@@ -69,9 +66,8 @@ for i, w in enumerate(weight_scale_list):
     plt.title('W:' + str(w))
     if i == 15:
         plt.plot(x, bn_train_acc_list, label='Batch Normalization', markevery=2)
-        plt.plot(
-            x, train_acc_list, linestyle='--', label='Normal(without BatchNorm)', markevery=2
-        )
+        plt.plot(x, train_acc_list, linestyle='--',
+                 label='Normal(without BatchNorm)', markevery=2)
     else:
         plt.plot(x, bn_train_acc_list, markevery=2)
         plt.plot(x, train_acc_list, linestyle='--', markevery=2)
