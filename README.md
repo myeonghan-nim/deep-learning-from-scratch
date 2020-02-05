@@ -2,33 +2,31 @@
 
 ![thumb-course-phthon-basic](README.assets/thumb-course-phthon-basic-1573569963444.jpg)
 
-- Original Github link : [GitHub Storage](https://github.com/WegraLee/deep-learning-from-scratch)
+- Original Github link : [GitHub Repository](https://github.com/WegraLee/deep-learning-from-scratch)
 
-- DL 기초부터 차근차근 배워가기 위해 만든 repository입니다.
+- Deep Learning의 기초부터 차근차근 배워가기 위해 만든 repository 입니다.
 
 #### Tip
 
-- Anaconda를 설치한 후 Visual Studio Code에서 잡지 못하는 경우
+- 주로 사용하는 python 라이브러리 설치하기
 
-  1. `source ~/Anaconda3/Scripts/activate` 명령어를 사용해 강제로 가상환경을 구축합니다.
-
-  2. 주로 사용하는 python 라이브러리를 설치합니다.
+  - 본 책에서 주로 사용되는 라이브러리는 다음과 같습니다.
 
   ```bash
   $ pip install numpy scipy matplotlib pandas ipython notebook scikit-learn
   ```
 
-  > 이 외에도 추가로 필요한 라이브러리가 있다면 `pip install`로 설치하면 됩니다.
-
 - backups에 대해
 
-  - 해당 폴더는 다음 두 파일을 가지고 있습니다.
+  - 해당 폴더는 다음과 같은 파일들을 가지고 있습니다.
 
-    1. `equations_and_figures.zip`: 각 장에 사용된 수식, 그림들을 압축한 파일입니다.
+    1. `commons.zip`: 각 장에서 공통적으로 사용된 함수, 클래스 등을 정리한 파일입니다.
 
-    2. `params.pkl`: chapter07. CNN에 사용된 파라미터의 정보가 담긴 `pickle` 파일입니다.
+    2. `datasets.zip`: 각 장에서 공통적으로 사용된 테이터셋과 `pickle` 파일들입니다.
 
-## 0. What I learned
+    3. `equations_and_figures.zip`: 각 장에 사용된 수식, 그림들을 압축한 파일입니다.
+
+## What I learned
 
 - [chapter01. Hello, Python](https://github.com/Myeonghan-Jeong/deep-learning-from-scratch/tree/master/chapter01)
 
