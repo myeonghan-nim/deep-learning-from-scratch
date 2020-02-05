@@ -9,7 +9,6 @@ def gradient_descent(f, init_x, lr=0.01, step_num=100):
 
     for i in range(step_num):
         x_history.append(x.copy())
-
         grad = numerical_gradient(f, x)
         x -= lr * grad
 

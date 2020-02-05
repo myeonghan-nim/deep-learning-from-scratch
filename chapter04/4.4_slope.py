@@ -27,10 +27,8 @@ def numerical_gradient(f, X):
         return _numerical_gradient_no_batch(f, X)
     else:
         grad = np.zeros_like(X)
-
         for idx, x in enumerate(X):
             grad[idx] = _numerical_gradient_no_batch(f, x)
-
         return grad
 
 

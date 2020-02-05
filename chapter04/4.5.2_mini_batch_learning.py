@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 (x_train, t_train), (x_test, t_test) = load_mnist(
-    normalize=True, one_hot_label=True
-)
+    normalize=True, one_hot_label=True)
 
 network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
@@ -19,35 +18,28 @@ train_loss_list = []
 train_acc_list = []
 test_acc_list = []
 
-# loops for 1 epoch
-iter_per_epoch = max(train_size / batch_size, 1)
+iter_per_epoch = max(train_size / batch_size, 1)  # loops for 1 epoch
 for i in range(iters_num):
-    # get mini batch
-    batch_mask = np.random.choice(train_size, batch_size)
+    batch_mask = np.random.choice(train_size, batch_size)  # get mini batch
     x_batch = x_train[batch_mask]
     t_batch = t_train[batch_mask]
 
-    # calculate gradient
-    grad = network.gradient(x_batch, t_batch)
+    grad = network.gradient(x_batch, t_batch)  # calculate gradient
 
-    # renewal parameters
-    for key in ('W1', 'b1', 'W2', 'b2'):
+    for key in ('W1', 'b1', 'W2', 'b2'):  # renewal parameters
         network.params[key] -= learning_rate * grad[key]
 
-    # write learning datas
-    loss = network.loss(x_batch, t_batch)
+    loss = network.loss(x_batch, t_batch)  # write learning datas
     train_loss_list.append(loss)
 
-    # calculate accuracy of 1 epoch
-    if i % iter_per_epoch == 0:
+    if i % iter_per_epoch == 0:  # calculate accuracy of 1 epoch
         train_acc = network.accuracy(x_train, t_train)
         test_acc = network.accuracy(x_test, t_test)
         train_acc_list.append(train_acc)
         test_acc_list.append(test_acc)
         print('train acc, test acc | ' + str(train_acc) + ', ' + str(test_acc))
 
-# draw graph
-markers = {'train': 'o', 'test': 's'}
+markers = {'train': 'o', 'test': 's'}  # draw graph
 x = np.arange(len(train_acc_list))
 plt.plot(x, train_acc_list, label='train acc')
 plt.plot(x, test_acc_list, label='test acc', linestyle='--')
