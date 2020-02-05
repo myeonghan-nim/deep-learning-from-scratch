@@ -2,14 +2,9 @@ from .optimizer import *
 import numpy as np
 
 
-class Trainer:
-    '''
-    신경망 훈련을 대신 해주는 클래스입니다.
-    '''
-
+class Trainer:  # class for replace neural network train
     def __init__(self, network, x_train, t_train, x_test, t_test,
-                 epochs=20, mini_batch_size=100,
-                 optimizer='SGD', optimizer_param={'lr': 0.01},
+                 epochs=20, mini_batch_size=100, optimizer='SGD', optimizer_param={'lr': 0.01},
                  evaluate_sample_num_per_epoch=None, verbose=True):
         self.network = network
         self.verbose = verbose
@@ -21,11 +16,12 @@ class Trainer:
         self.batch_size = mini_batch_size
         self.evaluate_sample_num_per_epoch = evaluate_sample_num_per_epoch
 
-        # optimzer
-        optimizer_class_dict = {'sgd': SGD, 'momentum': Momentum, 'nesterov': Nesterov,
-                                'adagrad': AdaGrad, 'rmsprpo': RMSprop, 'adam': Adam}
-        self.optimizer = optimizer_class_dict[optimizer.lower()
-                                              ](**optimizer_param)
+        optimizer_class_dict = {'sgd': SGD, 'momentum': Momentum,
+                                'nesterov': Nesterov, 'adagrad': AdaGrad,
+                                'rmsprpo': RMSprop, 'adam': Adam}  # optimzer
+
+        self.optimizer = optimizer_class_dict[optimizer.lower()](
+            **optimizer_param)
 
         self.train_size = x_train.shape[0]
         self.iter_per_epoch = max(self.train_size / mini_batch_size, 1)
@@ -67,8 +63,8 @@ class Trainer:
             if self.verbose:
                 print('=== epoch:' + str(self.current_epoch) +
                       ', train acc:' + str(train_acc) +
-                      ', test acc:' + str(test_acc) +
-                      ' ===')
+                      ', test acc:' + str(test_acc) + ' ===')
+
         self.current_iter += 1
 
     def train(self):
@@ -76,7 +72,6 @@ class Trainer:
             self.train_step()
 
         test_acc = self.network.accuracy(self.x_test, self.t_test)
-
         if self.verbose:
             print('=============== Final Test Accuracy ===============')
             print('test acc:' + str(test_acc))

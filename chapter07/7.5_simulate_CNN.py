@@ -6,7 +6,7 @@ import numpy as np
 
 (x_train, t_train), (x_test, t_test) = load_mnist(flatten=False)
 
-# if takes long time, reduce datas
+# reduce datas
 x_train, t_train = x_train[:5000], t_train[:5000]
 x_test, t_test = x_test[:1000], t_test[:1000]
 
@@ -23,12 +23,10 @@ trainer = Trainer(network, x_train, t_train, x_test, t_test,
                   evaluate_sample_num_per_epoch=1000)
 trainer.train()
 
-# save parameters
-network.save_params('./chapter07/params.pkl')
+network.save_params('./chapter07/params.pkl')  # save parameters
 print('Saved Network Parameters!')
 
-# draw graph
-markers = {'train': 'o', 'test': 's'}
+markers = {'train': 'o', 'test': 's'}  # draw graph
 x = np.arange(max_epochs)
 plt.plot(x, trainer.train_acc_list, marker='o', label='train', markevery=2)
 plt.plot(x, trainer.test_acc_list, marker='s', label='test', markevery=2)

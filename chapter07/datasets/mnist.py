@@ -3,12 +3,11 @@ try:
 except ImportError:
     raise ImportError('You should use Python 3.x')
 
-import os.path
-import gzip
-import pickle
-import os
 import numpy as np
-
+import pickle
+import gzip
+import os
+import os.path
 
 url_base = 'http://yann.lecun.com/exdb/mnist/'
 key_file = {
@@ -94,19 +93,17 @@ def _change_one_hot_label(X):
 
 def load_mnist(normalize=True, flatten=True, one_hot_label=False):
     '''
-    MNIST 데이터셋 읽기
+    read MNIST dataset
 
     Parameters
     ----------
-    normalize: 이미지의 픽셀 값을 0.0~1.0 사이의 값으로 정규화할지 정한다.
-    one_hot_label: 
-        one_hot_label이 True면、레이블을 원-핫(one-hot) 배열로 돌려준다.
-        one-hot 배열은 예를 들어 [0,0,1,0,0,0,0,0,0,0]처럼 한 원소만 1인 배열이다.
-    flatten: 입력 이미지를 1차원 배열로 만들지를 정한다. 
+    normalize: decide image pixel normalization in range 0 ~ 1
+    one_hot_label: decide return one-hot encoded label
+    flatten: decide change images to 1d mat
 
     Returns
     -------
-    (훈련 이미지, 훈련 레이블), (시험 이미지, 시험 레이블)
+    (train image, train label), (test image, test label)
     '''
     if not os.path.exists(save_file):
         init_mnist()

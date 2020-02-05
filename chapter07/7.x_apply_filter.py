@@ -6,9 +6,7 @@ import numpy as np
 
 
 def filter_show(filters, nx=4, show_num=16):
-    '''
-    c.f. https://gist.github.com/aidiary/07d530d5e08011832b12#file-draw_weight-py
-    '''
+    # https://gist.github.com/aidiary/07d530d5e08011832b12#file-draw_weight-py
     FN, C, FH, FW = filters.shape
     ny = int(np.ceil(show_num / nx))
 
@@ -26,8 +24,7 @@ network = SimpleConvNet(input_dim=(1, 28, 28),
                                     'pad': 0, 'stride': 1},
                         hidden_size=100, output_size=10, weight_init_std=0.01)
 
-# learned bias
-network.load_params('./chapter07/params.pkl')
+network.load_params('./chapter07/params.pkl')  # learned bias
 filter_show(network.params['W1'], 16)
 
 img = imread('./chapter07/datasets/lena_gray.png')
