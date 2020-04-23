@@ -11,7 +11,7 @@ def get_data():
 
 
 def init_network():
-    with open('chapter03/3.x_weight.pkl', 'rb') as f:
+    with open('./3.x_weight.pkl', 'rb') as f:
         network = pickle.load(f)
     return network
 

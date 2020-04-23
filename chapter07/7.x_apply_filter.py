@@ -24,10 +24,10 @@ network = SimpleConvNet(input_dim=(1, 28, 28),
                                     'pad': 0, 'stride': 1},
                         hidden_size=100, output_size=10, weight_init_std=0.01)
 
-network.load_params('./chapter07/params.pkl')  # learned bias
+network.load_params('./params.pkl')  # learned bias
 filter_show(network.params['W1'], 16)
 
-img = imread('./chapter07/datasets/lena_gray.png')
+img = imread('./datasets/lena_gray.png')
 img = img.reshape(1, 1, *img.shape)
 
 fig = plt.figure()

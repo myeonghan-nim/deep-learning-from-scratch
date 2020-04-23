@@ -22,5 +22,5 @@ def filter_show(filters, nx=8, margin=3, scale=10):
 network = SimpleConvNet()  # bias after random init
 filter_show(network.params['W1'])
 
-network.load_params('./chapter07/params.pkl')  # learned bias
+network.load_params('./params.pkl')  # learned bias
 filter_show(network.params['W1'])

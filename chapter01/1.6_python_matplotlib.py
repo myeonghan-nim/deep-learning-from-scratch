@@ -25,7 +25,7 @@ plt.legend()
 plt.show()
 
 # image showing with matplotlib
-img = imread('./README.assets/thumb-course-phthon-basic-1573569963444.jpg')
+img = imread('')
 plt.imshow(img)
 
 plt.show()

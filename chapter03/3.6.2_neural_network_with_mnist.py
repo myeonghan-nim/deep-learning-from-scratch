@@ -12,7 +12,7 @@ def get_data():  # load mnist datasets with normalization
 
 
 def init_network():  # read wieght parameters
-    with open('chapter03/3.x_weight.pkl', 'rb') as f:
+    with open('./3.x_weight.pkl', 'rb') as f:
         network = pickle.load(f)
     return network
 
